@@ -4,8 +4,8 @@ import { QuizGame } from './components/QuizGame';
 import { LoginPage } from './components/LoginPage';
 import { SignupPage } from './components/SignupPage';
 import { AdminDashboard } from './components/AdminDashboard';
+import { LoadingScreen } from './components/LoadingScreen';
 import { supabase } from './lib/supabase';
-import { Loader } from 'lucide-react';
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -40,14 +40,7 @@ function AppContent() {
   }, [user]);
 
   if (loading || (user && roleLoading)) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="flex items-center gap-3 text-gray-700">
-          <Loader className="w-6 h-6 animate-spin" />
-          <span>Loading...</span>
-        </div>
-      </div>
-    );
+    return <LoadingScreen />;
   }
 
   if (!user) {
