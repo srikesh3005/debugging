@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { LogIn, Mail, Lock, AlertCircle } from 'lucide-react'
+import { Logo } from './Logo'
+import { Mail, Lock, AlertCircle } from 'lucide-react'
 
 interface LoginPageProps {
   onSwitchToSignup: () => void
@@ -37,8 +38,8 @@ export function LoginPage({ onSwitchToSignup }: LoginPageProps) {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="bg-blue-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <LogIn className="w-8 h-8 text-white" />
+          <div className="flex justify-center mb-4">
+            <Logo className="w-32 h-16" />
           </div>
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Welcome Back</h1>
           <p className="text-gray-600">Sign in to start your debugging quiz</p>

@@ -5,6 +5,8 @@ import { ProgressBar } from './ProgressBar';
 import { Timer } from './Timer';
 import { OverallTimer } from './OverallTimer';
 import { AntiCheatWarning } from './AntiCheatWarning';
+import { LoadingScreen } from './LoadingScreen';
+import { Logo } from './Logo';
 import { ChevronRight, Trophy, LogOut } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
@@ -163,14 +165,7 @@ export function QuizGame() {
 
   // Show loading while checking for previous attempts
   if (checkingPreviousAttempt) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-        <div className="bg-white rounded-3xl shadow-2xl p-12 max-w-2xl w-full text-center">
-          <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-          <p className="text-gray-600">Checking your quiz status...</p>
-        </div>
-      </div>
-    );
+    return <LoadingScreen />;
   }
 
   // Show message if user has already taken the quiz
@@ -231,6 +226,11 @@ export function QuizGame() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
+      {/* Logo in top left */}
+      <div className="fixed top-4 left-4 z-40">
+        <Logo className="w-24 h-12" />
+      </div>
+
       <OverallTimer
         duration={30 * 60} // 30 minutes in seconds
         onTimeUp={handleOverallTimeUp}

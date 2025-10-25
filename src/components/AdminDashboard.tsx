@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import { Logo } from './Logo';
 import { BarChart3, Users, Clock, Trophy, LogOut, Loader } from 'lucide-react';
 
 interface QuizResult {
@@ -82,9 +83,7 @@ export function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center gap-4">
-              <div className="bg-blue-500 w-14 h-14 rounded-2xl flex items-center justify-center">
-                <BarChart3 className="w-8 h-8 text-white" />
-              </div>
+              <Logo className="w-28 h-14" />
               <div>
                 <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
                 <p className="text-gray-600">Quiz Results & Analytics</p>
