@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import { Logo } from './Logo';
-import { BarChart3, Users, Clock, Trophy, LogOut, Loader } from 'lucide-react';
+import { BarChart3, Users, Clock, Trophy, LogOut, Loader, AlertTriangle } from 'lucide-react';
 
 interface QuizResult {
   id: string;
@@ -14,6 +14,7 @@ interface QuizResult {
   full_name: string;
   email: string;
   total_answers: number;
+  user_id: string;
 }
 
 export function AdminDashboard() {
@@ -21,10 +22,34 @@ export function AdminDashboard() {
   const [results, setResults] = useState<QuizResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [warningsData, setWarningsData] = useState<Record<string, number>>({});
 
   useEffect(() => {
     fetchResults();
+    fetchWarnings();
   }, []);
+
+  const fetchWarnings = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('anti_cheat_logs')
+        .select('*');
+
+      if (error) throw error;
+
+      // Count warnings per attempt
+      const warningCounts: Record<string, number> = {};
+      data?.forEach((log) => {
+        if (log.attempt_id) {
+          warningCounts[log.attempt_id] = (warningCounts[log.attempt_id] || 0) + 1;
+        }
+      });
+      
+      setWarningsData(warningCounts);
+    } catch (err: any) {
+      console.error('Error fetching warnings:', err);
+    }
+  };
 
   const fetchResults = async () => {
     try {
@@ -222,6 +247,20 @@ export function AdminDashboard() {
                         <div className="text-center">
                           <p className="text-lg font-semibold text-gray-900">{formatTime(result.time_taken)}</p>
                           <p className="text-xs text-gray-500 uppercase tracking-wide">Time</p>
+                        </div>
+
+                        <div className="text-center">
+                          {warningsData[result.id] ? (
+                            <div className="inline-flex items-center gap-1 px-3 py-2 rounded-full bg-red-50 border border-red-200">
+                              <AlertTriangle className="w-4 h-4 text-red-600" />
+                              <span className="text-sm font-bold text-red-700">{warningsData[result.id]}</span>
+                            </div>
+                          ) : (
+                            <div className="inline-flex items-center gap-1 px-3 py-2 rounded-full bg-green-50 border border-green-200">
+                              <span className="text-sm font-bold text-green-700">0</span>
+                            </div>
+                          )}
+                          <p className="text-xs text-gray-500 uppercase tracking-wide mt-1">Warnings</p>
                         </div>
                         
                         <div className="text-center">

@@ -8,7 +8,7 @@ import { supabase } from './lib/supabase';
 
 function AppContent() {
   const { user, loading } = useAuth();
-  const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
+  const [authMode, setAuthMode] = useState<'login' | 'signup'>('signup');
   const [userRole, setUserRole] = useState<'user' | 'admin' | null>(null);
   const [roleLoading, setRoleLoading] = useState(true);
 

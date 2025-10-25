@@ -24,6 +24,7 @@ export function QuizGame() {
   const [attemptId, setAttemptId] = useState<string | null>(null);
   const [showWarning, setShowWarning] = useState(false);
   const [lastViolationType, setLastViolationType] = useState<string>('');
+  const [isSaving, setIsSaving] = useState(false);
 
   // Initialize anti-cheat system
   const {
@@ -34,7 +35,7 @@ export function QuizGame() {
   } = useAntiCheat({
     userId: user?.id || '',
     attemptId: attemptId || undefined,
-    maxWarnings: 3,
+    maxWarnings: 4,
     onMaxWarningsReached: async () => {
       // Auto-submit quiz when max warnings reached
       await saveQuizResults();
@@ -77,6 +78,38 @@ export function QuizGame() {
     checkPreviousAttempt();
   }, [user]);
 
+  // Create quiz attempt at the start
+  useEffect(() => {
+    const createAttempt = async () => {
+      if (!user || hasAlreadyTaken || checkingPreviousAttempt || attemptId) return;
+
+      try {
+        const { data, error } = await supabase
+          .from('quiz_attempts')
+          .insert({
+            user_id: user.id,
+            score: 0,
+            total_questions: quizQuestions.length,
+            percentage: 0,
+            time_taken: 0
+          })
+          .select()
+          .single();
+
+        if (error) throw error;
+
+        if (data?.id) {
+          setAttemptId(data.id);
+          console.log('Created attempt:', data.id);
+        }
+      } catch (error) {
+        console.error('Error creating quiz attempt:', error);
+      }
+    };
+
+    createAttempt();
+  }, [user, hasAlreadyTaken, checkingPreviousAttempt, attemptId]);
+
   const handleAnswer = (questionId: number, answer: 'A' | 'B' | 'C' | 'D') => {
     setAnswers((prev) => ({ ...prev, [questionId]: answer }));
   };
@@ -97,9 +130,10 @@ export function QuizGame() {
     handleNext();
   };
 
-  const handleOverallTimeUp = () => {
+  const handleOverallTimeUp = async () => {
     // Force complete the quiz when overall time runs out
     setOverallTimerActive(false);
+    await saveQuizResults();
     setIsCompleted(true);
   };
 
@@ -113,32 +147,27 @@ export function QuizGame() {
   };
 
   const saveQuizResults = async () => {
-    if (!user) return;
+    if (!user || isSaving || !attemptId) return; // Need attemptId to save
+    
+    setIsSaving(true);
 
     const score = calculateScore();
     const percentage = Math.round((score / quizQuestions.length) * 100);
     const timeTaken = Math.round((Date.now() - startTime) / 1000); // in seconds
 
     try {
-      // Save quiz attempt
-      const { data: attemptData, error: attemptError } = await supabase
+      // Update quiz attempt with final results
+      const { error: attemptError } = await supabase
         .from('quiz_attempts')
-        .insert({
-          user_id: user.id,
+        .update({
           score,
-          total_questions: quizQuestions.length,
           percentage,
-          time_taken: timeTaken
+          time_taken: timeTaken,
+          completed_at: new Date().toISOString()
         })
-        .select()
-        .single();
+        .eq('id', attemptId);
 
       if (attemptError) throw attemptError;
-
-      // Store attemptId for anti-cheat logging
-      if (attemptData?.id) {
-        setAttemptId(attemptData.id);
-      }
 
       // Save individual answers
       const answerPromises = quizQuestions.map((question) => {
@@ -146,7 +175,7 @@ export function QuizGame() {
         if (!selectedAnswer) return null;
 
         return supabase.from('quiz_answers').insert({
-          attempt_id: attemptData.id,
+          attempt_id: attemptId,
           question_id: question.id,
           selected_answer: selectedAnswer,
           correct_answer: question.correctAnswer,
@@ -157,6 +186,8 @@ export function QuizGame() {
       await Promise.all(answerPromises.filter(Boolean));
     } catch (error) {
       console.error('Error saving quiz results:', error);
+    } finally {
+      setIsSaving(false);
     }
   };
 
