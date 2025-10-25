@@ -271,7 +271,7 @@ export function QuizGame() {
       {showWarning && (
         <AntiCheatWarning
           warnings={warnings}
-          maxWarnings={3}
+          maxWarnings={4}
           lastWarningType={lastViolationType}
           onDismiss={() => setShowWarning(false)}
           requestFullscreen={requestFullscreen}

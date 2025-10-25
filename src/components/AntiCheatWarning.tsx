@@ -9,6 +9,7 @@ interface AntiCheatWarningProps {
 }
 
 export function AntiCheatWarning({ warnings, maxWarnings, lastWarningType, onDismiss, requestFullscreen }: AntiCheatWarningProps) {
+  
   const handleDismiss = () => {
     onDismiss();
     // Automatically re-enter fullscreen after dismissing warning

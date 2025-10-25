@@ -29,6 +29,13 @@ export function useAntiCheat({
   const [hasLeftTab, setHasLeftTab] = useState(false);
   const eventsRef = useRef<AntiCheatEvent[]>([]);
   const hasEnteredFullscreenOnce = useRef(false);
+  const warningsRef = useRef(0);
+  const lastWarningTime = useRef<Record<string, number>>({});
+
+  // Keep warningsRef in sync with warnings state
+  useEffect(() => {
+    warningsRef.current = warnings;
+  }, [warnings]);
 
   // Log event to database
   const logEvent = async (event: AntiCheatEvent) => {
@@ -49,18 +56,33 @@ export function useAntiCheat({
 
   // Add warning
   const addWarning = (event: AntiCheatEvent) => {
+    // Debounce: Prevent duplicate warnings within 2 seconds
+    const now = Date.now();
+    const lastTime = lastWarningTime.current[event.type] || 0;
+    
+    if (now - lastTime < 2000) {
+      console.log('Warning debounced:', event.type);
+      return;
+    }
+    
+    lastWarningTime.current[event.type] = now;
     logEvent(event);
     
-    const newWarningCount = warnings + 1;
-    setWarnings(newWarningCount);
+    setWarnings((prevWarnings) => {
+      const newWarningCount = prevWarnings + 1;
+      console.log('Warning triggered:', event.type, 'Total warnings:', newWarningCount, 'Max:', maxWarnings);
 
-    if (onWarning) {
-      onWarning(event);
-    }
+      if (onWarning) {
+        onWarning(event);
+      }
 
-    if (newWarningCount >= maxWarnings && onMaxWarningsReached) {
-      onMaxWarningsReached();
-    }
+      if (newWarningCount >= maxWarnings && onMaxWarningsReached) {
+        console.log('Max warnings reached! Auto-submitting quiz.');
+        onMaxWarningsReached();
+      }
+
+      return newWarningCount;
+    });
   };
 
   // Request fullscreen
@@ -140,7 +162,8 @@ export function useAntiCheat({
       document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
       document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
     };
-  }, [userId, attemptId, warnings, requireFullscreen]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId, attemptId, requireFullscreen]);
 
   return {
     warnings,
