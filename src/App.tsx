@@ -4,7 +4,6 @@ import { QuizGame } from './components/QuizGame';
 import { LoginPage } from './components/LoginPage';
 import { SignupPage } from './components/SignupPage';
 import { AdminDashboard } from './components/AdminDashboard';
-import { LoadingScreen } from './components/LoadingScreen';
 import { supabase } from './lib/supabase';
 
 function AppContent() {
@@ -40,7 +39,7 @@ function AppContent() {
   }, [user]);
 
   if (loading || (user && roleLoading)) {
-    return <LoadingScreen />;
+    return null; // No loading screen, instant transition
   }
 
   if (!user) {

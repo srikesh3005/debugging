@@ -5,7 +5,6 @@ import { ProgressBar } from './ProgressBar';
 import { Timer } from './Timer';
 import { OverallTimer } from './OverallTimer';
 import { AntiCheatWarning } from './AntiCheatWarning';
-import { LoadingScreen } from './LoadingScreen';
 import { Logo } from './Logo';
 import { ChevronRight, Trophy, LogOut } from 'lucide-react';
 import { supabase } from '../lib/supabase';
@@ -165,7 +164,7 @@ export function QuizGame() {
 
   // Show loading while checking for previous attempts
   if (checkingPreviousAttempt) {
-    return <LoadingScreen />;
+    return null; // Fast loading, no animation
   }
 
   // Show message if user has already taken the quiz
