@@ -21,3 +21,14 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Documentation files
+ANTI_CHEAT_SETUP.md
+IMPLEMENTATION_SUMMARY.md
+QUICK_START_ANTI_CHEAT.md
+ADMIN_ACCESS.md
+
+# SQL files
+migration-anti-cheat.sql
+create-admin.sql
+database-schema.sql
