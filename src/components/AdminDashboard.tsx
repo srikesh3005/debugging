@@ -15,6 +15,7 @@ interface QuizResult {
   email: string;
   total_answers: number;
   user_id: string;
+  quiz_type?: string;
 }
 
 export function AdminDashboard() {
@@ -55,6 +56,7 @@ export function AdminDashboard() {
     try {
       console.log('Fetching quiz results from quiz_results_view...');
       
+      // First, try the view
       const { data, error } = await supabase
         .from('quiz_results_view')
         .select('*')
@@ -62,6 +64,69 @@ export function AdminDashboard() {
 
       console.log('Quiz results data:', data);
       console.log('Quiz results error:', error);
+      
+      // If view fails or returns nothing, try direct table query
+      if (error || !data || data.length === 0) {
+        console.log('View failed or empty, trying direct table query...');
+        
+        const { data: directData, error: directError } = await supabase
+          .from('quiz_attempts')
+          .select(`
+            id,
+            user_id,
+            score,
+            total_questions,
+            percentage,
+            time_taken,
+            completed_at,
+            quiz_type,
+            profiles!inner(full_name, email)
+          `)
+          .not('completed_at', 'is', null)
+          .order('completed_at', { ascending: false });
+        
+        console.log('Direct query data:', directData);
+        console.log('Direct query error:', directError);
+        
+        if (directError) throw directError;
+        
+        // Transform the data to match our QuizResult interface
+        const transformedData = directData?.map(item => ({
+          id: item.id,
+          user_id: item.user_id,
+          completed_at: item.completed_at,
+          score: item.score,
+          total_questions: item.total_questions,
+          percentage: item.percentage,
+          time_taken: item.time_taken,
+          quiz_type: item.quiz_type,
+          full_name: (item.profiles as any).full_name,
+          email: (item.profiles as any).email,
+          total_answers: 0 // Will need to count from quiz_answers if needed
+        })) || [];
+        
+        console.log('Transformed data:', transformedData);
+        setResults(transformedData);
+        setLoading(false);
+        return;
+      }
+      
+      // Log each result to see what we're getting
+      if (data && data.length > 0) {
+        console.log('=== DETAILED QUIZ RESULTS ===');
+        data.forEach((result, index) => {
+          console.log(`Result ${index + 1}:`, {
+            email: result.email,
+            quiz_type: result.quiz_type,
+            score: result.score,
+            percentage: result.percentage,
+            total_questions: result.total_questions,
+            completed_at: result.completed_at,
+            total_answers: result.total_answers
+          });
+        });
+        console.log('=== END DETAILED RESULTS ===');
+      }
 
       if (error) throw error;
       setResults(data || []);
