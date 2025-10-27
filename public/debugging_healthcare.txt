@@ -64,91 +64,91 @@ D. Database offline
 
 9. React app throws “component not found.” Likely reason?
 
-A. Import path incorrect or file name mismatch
-B. Server port blocked
+A. Server port blocked
+B. Import path incorrect or file name mismatch
 C. JavaScript disabled
 D. CSS missing
- Answer: A
+ Answer: B
 
 10. Chatbot repeats responses constantly. Debug?
 
-A. Session ID resets on each message
+A. Internet speed slow
 B. HTML validation error
-C. Internet speed slow
+C. Session ID resets on each message
 D. Font size too small
-Answer: A
+Answer: C
 
 11. REST API returns CORS error. Fix?
 
-A. Enable Access-Control-Allow-Origin on server
+A. Update CSS
 B. Clear browser cache
 C. Restart server
-D. Update CSS
-Answer: A
+D. Enable Access-Control-Allow-Origin on server
+Answer: D
 
 12. Billing app calculates wrong totals. Why?
 
-A. Floating-point precision issues
-B. Font size too small
+A. Font size too small
+B. Floating-point precision issues
 C. API endpoint blocked
 D. Browser theme dark
-Answer: A
+Answer: B
 
 13. Mobile app fails to sync patient reports. Likely cause?
 
-A. Missing internet permission in app manifest
+A. Icon size incorrect
 B. CSS missing
-C. Icon size incorrect
+C. Missing internet permission in app manifest
 D. User login not required
-Answer:
+Answer:C
 
 14. Temperature sensor shows negative readings. Debug?
 
-A. Sensor calibration or ADC formula incorrect
-B. Internet slow
+A. Internet slow
+B. Sensor calibration or ADC formula incorrect
 C. Browser zoom high
 D. CSS style overrides
-Answer: A
+Answer: B
 
 15. ML model predicts only one class (0% accuracy). Cause?
 
-A. Imbalanced training data or label encoding error
+A. Database empty
 B. Python version mismatch
-C. Database empty
+C. Imbalanced training data or label encoding error
 D. Internet disconnected
-Answer: A
+Answer: C
 
 16. Analytics dashboard shows stale patient data. Debug?
 
-A. Cache not invalidated or refresh logic missing
+A. Screen resolution too low
 B. Incorrect CSS
 C. Chart font size too large
-D. Screen resolution too low
-Answer: A
+D. Cache not invalidated or refresh logic missing
+Answer: D
 
 17. SQL query returns duplicate patient records. Fix?
 
-A. Use DISTINCT or correct join conditions
-B. Increase font size
+A. Increase font size
+B. Use DISTINCT or correct join conditions
 C. Clear browser cache
 D. Use HTTPS
-Answer: A
+Answer: B
 
 18. Search returns “undefined” for patient names. Cause?
 
-A. Null or empty string in JSON response
+A. Font too small
 B. CSS not loaded
-C. Font too small
+C. Null or empty string in JSON response
 D. Icon missing
-Answer: A
+Answer: C
 
 19. Telehealth video session fails to connect. Why?
 
-A. Incorrect WebRTC TURN/STUN server credentials
+A. CSS file missing
 B. Browser theme dark
 C. Font mismatch
-D. CSS file missing
-Answer: A
+D. Incorrect WebRTC TURN/STUN server credentials
+Answer: D
 
 20. Image processing script throws “File not found.” Cause?
 
@@ -160,35 +160,35 @@ Answer: A
 
 21. REST API returns wrong JSON format. Debug?
 
-A. Serialization error (JSON.stringify() or model-to-dict)
-B. Font missing
+A. Font missing
+B. Serialization error (JSON.stringify() or model-to-dict)
 C. CSS file not loaded
 D. Icon size mismatch
-Answer: A
+Answer: B
 
 22. Notification service sends duplicates. Cause?
 
-A. Message queue not acknowledged properly
+A. Browser zoom
 B. CSS issue
 C. Font mismatch
-D. Browser zoom
-Answer: A
+D. Message queue not acknowledged properly
+Answer: D
 
 23. Wearable health app crashes on startup. Likely reason?
 
-A. Bluetooth initialization or permission missing
+A. Browser offline
 B. Icon missing
-C. Browser offline
+C. Bluetooth initialization or permission missing
 D. CSS missing
-Answer: A
+Answer: C
 
 24. Flask dashboard doesn’t update after data entry. Debug?
 
-A. Route returns cached template, not fresh database data
+A. JavaScript minified
 B. Font size mismatch
 C. CSS missing
-D. JavaScript minified
-Answer: A
+D. Route returns cached template, not fresh database data
+Answer: D
 
 25. API allows overlapping appointments. Fix?
 
@@ -200,35 +200,35 @@ Answer: A
 
 26. Django app throws CSRF errors. Debug?
 
-A. Ensure CSRF token included in AJAX request
-B. CSS missing
+A. CSS missing
+B. Ensure CSRF token included in AJAX request
 C. Font mismatch
 D. Database empty
-Answer: A
+Answer: B
 
 27. Backend job for ECG file processing runs infinitely. Cause?
 
-A. Missing termination condition in loop
+A. CSS file missing
 B. Font size mismatch
-C. CSS file missing
+C. Missing termination condition in loop
 D. Browser zoom high
-Answer: A
+Answer: C
 
 28. API rate limiter blocks legitimate staff. Fix?
 
-A. Adjust thresholds or whitelist internal IPs
+A. JavaScript minified
 B. Font size mismatch
 C. CSS missing
-D. JavaScript minified
-Answer: A
+D. Adjust thresholds or whitelist internal IPs
+Answer: D
 
 29. Angular patient portal doesn’t load after deployment. Why?
 
-A. Base href or routing config incorrect in production
-B. Font mismatch
+A. Font mismatch
+B. Base href or routing config incorrect in production
 C. CSS missing
 D. Icon missing
-Answer: A
+Answer: B
 
 30. AI recommendation system gives inconsistent results. Debug?
 

@@ -1,6 +1,6 @@
 import { quizCategories, QuizCategory } from '../data/quizData';
 import { Logo } from './Logo';
-import { LogOut, CheckCircle } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 interface QuizSelectionProps {
@@ -55,14 +55,8 @@ export function QuizSelection({ onSelectQuiz }: QuizSelectionProps) {
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold text-gray-800 mb-4">Choose Your Quiz</h1>
           <p className="text-xl text-gray-600">
-            Select one quiz category to test your knowledge
+            Select a quiz category to test your knowledge
           </p>
-          <div className="bg-yellow-50 border border-yellow-300 rounded-lg p-4 mt-6 inline-block">
-            <p className="text-yellow-800 font-semibold flex items-center gap-2">
-              <CheckCircle className="w-5 h-5" />
-              You can only take ONE quiz. Choose wisely!
-            </p>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

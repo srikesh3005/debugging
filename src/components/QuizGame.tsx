@@ -14,10 +14,10 @@ import { isTestAccount } from '../lib/testAccounts';
 
 interface QuizGameProps {
   quizId: string;
-  hasAlreadyTaken: boolean;
+  hasAlreadyTaken?: boolean; // Make it optional since we're not using it
 }
 
-export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: QuizGameProps) {
+export function QuizGame({ quizId }: QuizGameProps) {
   const { user, signOut } = useAuth();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, 'A' | 'B' | 'C' | 'D'>>({});
@@ -25,7 +25,6 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
   const [isCompleted, setIsCompleted] = useState(false);
   const [overallTimerActive, setOverallTimerActive] = useState(true);
   const [startTime] = useState(Date.now());
-  const [hasAlreadyTaken] = useState(initialHasAlreadyTaken);
   const [attemptId, setAttemptId] = useState<string | null>(null);
   const [showWarning, setShowWarning] = useState(false);
   const [lastViolationType, setLastViolationType] = useState<string>('');
@@ -62,10 +61,9 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
 
   useEffect(() => {
     const createAttempt = async () => {
-      if (!user || hasAlreadyTaken || attemptId || isCreatingAttempt.current) {
+      if (!user || attemptId || isCreatingAttempt.current) {
         console.log('Skipping attempt creation:', { 
           hasUser: !!user, 
-          hasAlreadyTaken, 
           attemptId,
           isCreating: isCreatingAttempt.current
         });
@@ -76,10 +74,10 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
       isCreatingAttempt.current = true;
 
       try {
-        // First, check if an attempt already exists for this quiz
+        // Check for INCOMPLETE attempts to resume
         const { data: existingAttempt, error: checkError } = await supabase
           .from('quiz_attempts')
-          .select('id')
+          .select('id, current_question_index, saved_answers')
           .eq('user_id', user.id)
           .eq('quiz_type', quizId)
           .eq('is_test', isTest)
@@ -91,8 +89,25 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
         }
 
         if (existingAttempt) {
-          console.log('Found existing incomplete attempt, reusing:', existingAttempt.id);
+          console.log('Found existing incomplete attempt, restoring progress:', existingAttempt);
           setAttemptId(existingAttempt.id);
+          
+          // Restore progress
+          if (existingAttempt.current_question_index !== null && existingAttempt.current_question_index !== undefined) {
+            setCurrentQuestionIndex(existingAttempt.current_question_index);
+            setTimerKey(existingAttempt.current_question_index); // Reset timer for current question
+          }
+          
+          if (existingAttempt.saved_answers && typeof existingAttempt.saved_answers === 'object') {
+            // Convert saved_answers from {question_id: answer} format to state format
+            const restoredAnswers: Record<number, 'A' | 'B' | 'C' | 'D'> = {};
+            Object.entries(existingAttempt.saved_answers).forEach(([questionId, answer]) => {
+              restoredAnswers[parseInt(questionId)] = answer as 'A' | 'B' | 'C' | 'D';
+            });
+            setAnswers(restoredAnswers);
+            console.log('Restored answers:', restoredAnswers);
+          }
+          
           return;
         }
 
@@ -147,6 +162,7 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
         if (data?.id) {
           setAttemptId(data.id);
         }
+        
       } catch (error) {
         console.error('Failed to create quiz attempt:', error);
       } finally {
@@ -156,16 +172,53 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
     };
 
     createAttempt();
-  }, [user, hasAlreadyTaken, attemptId, quizId, isTest]); // Removed quizQuestions.length from dependencies
+  }, [user, attemptId, quizId, isTest]); // Removed hasAlreadyTaken from dependencies
 
   const handleAnswer = (questionId: number, answer: 'A' | 'B' | 'C' | 'D') => {
-    setAnswers((prev) => ({ ...prev, [questionId]: answer }));
+    setAnswers((prev) => {
+      const newAnswers = { ...prev, [questionId]: answer };
+      
+      // Save progress to database
+      if (attemptId) {
+        saveProgress(currentQuestionIndex, newAnswers);
+      }
+      
+      return newAnswers;
+    });
+  };
+
+  const saveProgress = async (questionIndex: number, currentAnswers: Record<number, 'A' | 'B' | 'C' | 'D'>) => {
+    if (!attemptId) return;
+    
+    try {
+      const { error } = await supabase
+        .from('quiz_attempts')
+        .update({
+          current_question_index: questionIndex,
+          saved_answers: currentAnswers
+        })
+        .eq('id', attemptId);
+
+      if (error) {
+        console.error('Error saving quiz progress:', error);
+      } else {
+        console.log('Quiz progress saved:', { questionIndex, answersCount: Object.keys(currentAnswers).length });
+      }
+    } catch (error) {
+      console.error('Failed to save quiz progress:', error);
+    }
   };
 
   const handleNext = async () => {
     if (currentQuestionIndex < quizQuestions.length - 1) {
-      setCurrentQuestionIndex((prev) => prev + 1);
+      const nextIndex = currentQuestionIndex + 1;
+      setCurrentQuestionIndex(nextIndex);
       setTimerKey((prev) => prev + 1);
+      
+      // Save progress with updated question index
+      if (attemptId) {
+        await saveProgress(nextIndex, answers);
+      }
     } else {
       // Save results to database before completing
       await saveQuizResults();
@@ -296,35 +349,6 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
     }
   };
 
-
-
-  if (hasAlreadyTaken) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-        <div className="bg-white rounded-3xl shadow-2xl p-12 max-w-2xl w-full text-center">
-          <div className="mb-6">
-            <Trophy className="w-24 h-24 mx-auto text-yellow-500" />
-          </div>
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">Quiz Already Completed</h1>
-          <div className="bg-blue-50 border border-blue-200 text-gray-800 rounded-2xl p-6 mb-6">
-            <p className="text-lg mb-2">You have already taken this quiz.</p>
-            <p className="text-sm opacity-90">Each user can only attempt the quiz once.</p>
-          </div>
-          <p className="text-gray-600 mb-8">
-            Thank you for your participation! Your results have been recorded.
-          </p>
-          <button
-            onClick={signOut}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform flex items-center gap-2 mx-auto"
-          >
-            <LogOut className="w-5 h-5" />
-            Sign Out
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   if (isCompleted) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
@@ -339,16 +363,23 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
           </div>
           <div className="text-gray-600 mb-8">
             <p className="text-lg">Quiz completed successfully!</p>
-            {!isTest && <p className="text-sm mt-2">You can only take this quiz once.</p>}
             {isTest && <p className="text-sm mt-2 text-green-600 font-semibold">🧪 Test Mode: You can take unlimited quizzes!</p>}
           </div>
-          <button
-            onClick={signOut}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform flex items-center gap-2 mx-auto"
-          >
-            <LogOut className="w-5 h-5" />
-            Sign Out
-          </button>
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform"
+            >
+              Take Another Quiz
+            </button>
+            <button
+              onClick={signOut}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform flex items-center gap-2"
+            >
+              <LogOut className="w-5 h-5" />
+              Sign Out
+            </button>
+          </div>
         </div>
       </div>
     );

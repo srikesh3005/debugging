@@ -83,43 +83,43 @@ Answer:A)
 
 11. A Pandas DataFrame operation throws KeyError: 'column_name'. What’s the most likely reason?
 
-A. Typo or missing column name in DataFrame
-B. Incorrect data type
+A. Incorrect data type
+B. Typo or missing column name in DataFrame
 C. Python version issue
 D. CSV file too large
-Answer: A)
+Answer: B)
 
 12. The output of df['col'].mean() is NaN. Why?
 
-A. The column contains non-numeric data or all NaN values
+A. Wrong import statement
 B. Function used incorrectly
-C. Wrong import statement
+C. The column contains non-numeric data or all NaN values
 D. CSV delimiter issue
-Answer: A)
+Answer: C)
 
 13. When reading a CSV file, the entire dataset loads into a single column. Debug?
 
-A. Wrong delimiter used in pd.read_csv()
+A. Dataset corrupted
 B. CSV file too small
 C. Wrong Python version
-D. Dataset corrupted
-Answer: A)
+D. Wrong delimiter used in pd.read_csv()
+Answer: D)
 
 14. A NumPy operation arr / 0 throws a runtime warning. How to fix?
 
-A. Replace zeros before division or handle with np.errstate()
+A. Update IDE
 B. Change dtype to string
 C. Increase array size
-D. Update IDE
-Answer: A)
+D. Replace zeros before division or handle with np.errstate()
+Answer: D)
 
 15. Matplotlib chart shows no figure window. Cause?
 
-A. Missing plt.show()
+A. Font error
 B. Wrong dataset
-C. Font error
+C. Missing plt.show()
 D. Jupyter cell too small
-Answer: A)
+Answer: C)
 
 16. The code df.isna().any(axis=1) gives unexpected results. Debug?
 
@@ -131,27 +131,27 @@ Answer: A)
 
 17. SQL query returns fewer rows than expected. Cause?
 
-A. Wrong WHERE condition filtering valid data
-B. Too many columns
+A. Too many columns
+B. Wrong WHERE condition filtering valid data
 C. Database permission issue
 D. Table locked
-Answer: A)
+Answer: B)
 
 18. A correlation heatmap shows all values as NaN. Why?
 
-A. Data contains non-numeric or constant columns
+A. Wrong color map
 B. Plot size too small
-C. Wrong color map
+C. Data contains non-numeric or constant columns
 D. CSV not saved
-Answer: A)
+Answer: C)
 
 19. groupby() operation in Pandas gives DataError: No numeric types to aggregate. Cause?
 
-A. All grouped columns are strings or objects
+A. Wrong version of Pandas
 B. Missing import
 C. Too many rows
-D. Wrong version of Pandas
-Answer: A)
+D. All grouped columns are strings or objects
+Answer: D)
 
 20. ValueError: Length mismatch while assigning a list to a DataFrame column. Debug?
 
@@ -163,11 +163,11 @@ Answer: A)
 
 21. TypeError: unsupported operand type(s) during column arithmetic. Cause?
 
-A. Mixing strings with numeric columns
-B. Wrong library import
+A. Wrong library import
+B. Mixing strings with numeric columns
 C. Column names too long
 D. CSV not loaded
-Answer: A)
+Answer: B)
 
 22. A histogram shows only one bar. Why?
 
@@ -179,27 +179,27 @@ Answer: A)
 
 23. Jupyter Notebook shows “Kernel died” when running analysis. Debug?
 
-A. Dataset too large for available memory
+A. Typo in variable name
 B. Missing plt.show()
-C. Typo in variable name
+C. Dataset too large for available memory
 D. Incorrect Python path
-Answer: A)
+Answer: C)
 
 24. SettingWithCopyWarning appears in Pandas. What does it mean?
 
-A. Modifying a view instead of a copy of DataFrame
-B. Index out of range
+A. Index out of range
+B. Modifying a view instead of a copy of DataFrame
 C. File path not found
 D. Library version mismatch
-Answer: A)
+Answer: B)
 
 25. After merging two DataFrames, unexpected duplication occurs. Why?
 
-A. Merge keys contain duplicate values
+A. Plot issue
 B. CSV delimiter mismatch
 C. Different data types
-D. Plot issue
-Answer: A)
+D. Merge keys contain duplicate values
+Answer: D)
 
 26. SQL query throws ORA-00904: invalid identifier. Debug?
 
@@ -211,27 +211,27 @@ Answer: A)
 
 27. While plotting, plt.plot(x, y) shows a flat line. Cause?
 
-A. y-values all the same or x/y swapped
-B. Too many colors used
+A. Too many colors used
+B. y-values all the same or x/y swapped
 C. Axis labels missing
 D. CSV header wrong
-Answer: A)
+Answer: B)
 
 28. Data cleaning function drops too many rows. Why?
 
-A. Condition in dropna() or filter too strict
+A. Missing parentheses
 B. Plot not saved
-C. Missing parentheses
+C. Condition in dropna() or filter too strict
 D. CSV delimiter wrong
-Answer: A)
+Answer: C)
 
 29. Pivot table displays NaN for most cells. Cause?
 
-A. Missing values or unmatched keys in group columns
+A. Wrong syntax
 B. Wrong color map
 C. Chart too small
-D. Wrong syntax
-Answer: A)
+D. Missing values or unmatched keys in group columns
+Answer: D)
 
 30. The saved Excel output has no formatting and extra index column. Debug?
 

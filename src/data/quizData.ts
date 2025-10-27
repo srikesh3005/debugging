@@ -111,122 +111,122 @@ export const healthcareQuestions: Question[] = [
     id: 9,
     question: "React app throws 'component not found.' Likely reason?",
     options: {
-      A: "Import path incorrect or file name mismatch",
-      B: "Server port blocked",
+      A: "Server port blocked",
+      B: "Import path incorrect or file name mismatch",
       C: "JavaScript disabled",
       D: "CSS missing"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'B'
   },
   {
     id: 10,
     question: "Chatbot repeats responses constantly. Debug?",
     options: {
-      A: "Session ID resets on each message",
+      A: "Internet speed slow",
       B: "HTML validation error",
-      C: "Internet speed slow",
+      C: "Session ID resets on each message",
       D: "Font size too small"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'C'
   },
   {
     id: 11,
     question: "REST API returns CORS error. Fix?",
     options: {
-      A: "Enable Access-Control-Allow-Origin on server",
+      A: "Update CSS",
       B: "Clear browser cache",
       C: "Restart server",
-      D: "Update CSS"
+      D: "Enable Access-Control-Allow-Origin on server"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'D'
   },
   {
     id: 12,
     question: "Billing app calculates wrong totals. Why?",
     options: {
-      A: "Floating-point precision issues",
-      B: "Font size too small",
+      A: "Font size too small",
+      B: "Floating-point precision issues",
       C: "API endpoint blocked",
       D: "Browser theme dark"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'B'
   },
   {
     id: 13,
     question: "Mobile app fails to sync patient reports. Likely cause?",
     options: {
-      A: "Missing internet permission in app manifest",
+      A: "Icon size incorrect",
       B: "CSS missing",
-      C: "Icon size incorrect",
+      C: "Missing internet permission in app manifest",
       D: "User login not required"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'C'
   },
   {
     id: 14,
     question: "Temperature sensor shows negative readings. Debug?",
     options: {
-      A: "Sensor calibration or ADC formula incorrect",
-      B: "Internet slow",
+      A: "Internet slow",
+      B: "Sensor calibration or ADC formula incorrect",
       C: "Browser zoom high",
       D: "CSS style overrides"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'B'
   },
   {
     id: 15,
     question: "ML model predicts only one class (0% accuracy). Cause?",
     options: {
-      A: "Imbalanced training data or label encoding error",
+      A: "Database empty",
       B: "Python version mismatch",
-      C: "Database empty",
+      C: "Imbalanced training data or label encoding error",
       D: "Internet disconnected"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'C'
   },
   {
     id: 16,
     question: "Analytics dashboard shows stale patient data. Debug?",
     options: {
-      A: "Cache not invalidated or refresh logic missing",
+      A: "Screen resolution too low",
       B: "Incorrect CSS",
       C: "Chart font size too large",
-      D: "Screen resolution too low"
+      D: "Cache not invalidated or refresh logic missing"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'D'
   },
   {
     id: 17,
     question: "SQL query returns duplicate patient records. Fix?",
     options: {
-      A: "Use DISTINCT or correct join conditions",
-      B: "Increase font size",
+      A: "Increase font size",
+      B: "Use DISTINCT or correct join conditions",
       C: "Clear browser cache",
       D: "Use HTTPS"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'B'
   },
   {
     id: 18,
     question: "Search returns 'undefined' for patient names. Cause?",
     options: {
-      A: "Null or empty string in JSON response",
+      A: "Font too small",
       B: "CSS not loaded",
-      C: "Font too small",
+      C: "Null or empty string in JSON response",
       D: "Icon missing"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'C'
   },
   {
     id: 19,
     question: "Telehealth video session fails to connect. Why?",
     options: {
-      A: "Incorrect WebRTC TURN/STUN server credentials",
+      A: "CSS file missing",
       B: "Browser theme dark",
       C: "Font mismatch",
-      D: "CSS file missing"
+      D: "Incorrect WebRTC TURN/STUN server credentials"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'D'
   },
   {
     id: 20,
@@ -243,45 +243,45 @@ export const healthcareQuestions: Question[] = [
     id: 21,
     question: "REST API returns wrong JSON format. Debug?",
     options: {
-      A: "Serialization error (JSON.stringify() or model-to-dict)",
-      B: "Font missing",
+      A: "Font missing",
+      B: "Serialization error (JSON.stringify() or model-to-dict)",
       C: "CSS file not loaded",
       D: "Icon size mismatch"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'B'
   },
   {
     id: 22,
     question: "Notification service sends duplicates. Cause?",
     options: {
-      A: "Message queue not acknowledged properly",
+      A: "Browser zoom",
       B: "CSS issue",
       C: "Font mismatch",
-      D: "Browser zoom"
+      D: "Message queue not acknowledged properly"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'D'
   },
   {
     id: 23,
     question: "Wearable health app crashes on startup. Likely reason?",
     options: {
-      A: "Bluetooth initialization or permission missing",
+      A: "Browser offline",
       B: "Icon missing",
-      C: "Browser offline",
+      C: "Bluetooth initialization or permission missing",
       D: "CSS missing"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'C'
   },
   {
     id: 24,
     question: "Flask dashboard doesn't update after data entry. Debug?",
     options: {
-      A: "Route returns cached template, not fresh database data",
+      A: "JavaScript minified",
       B: "Font size mismatch",
       C: "CSS missing",
-      D: "JavaScript minified"
+      D: "Route returns cached template, not fresh database data"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'D'
   },
   {
     id: 25,
@@ -298,45 +298,45 @@ export const healthcareQuestions: Question[] = [
     id: 26,
     question: "Django app throws CSRF errors. Debug?",
     options: {
-      A: "Ensure CSRF token included in AJAX request",
-      B: "CSS missing",
+      A: "CSS missing",
+      B: "Ensure CSRF token included in AJAX request",
       C: "Font mismatch",
       D: "Database empty"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'B'
   },
   {
     id: 27,
     question: "Backend job for ECG file processing runs infinitely. Cause?",
     options: {
-      A: "Missing termination condition in loop",
+      A: "CSS file missing",
       B: "Font size mismatch",
-      C: "CSS file missing",
+      C: "Missing termination condition in loop",
       D: "Browser zoom high"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'C'
   },
   {
     id: 28,
     question: "API rate limiter blocks legitimate staff. Fix?",
     options: {
-      A: "Adjust thresholds or whitelist internal IPs",
+      A: "JavaScript minified",
       B: "Font size mismatch",
       C: "CSS missing",
-      D: "JavaScript minified"
+      D: "Adjust thresholds or whitelist internal IPs"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'D'
   },
   {
     id: 29,
     question: "Angular patient portal doesn't load after deployment. Why?",
     options: {
-      A: "Base href or routing config incorrect in production",
-      B: "Font mismatch",
+      A: "Font mismatch",
+      B: "Base href or routing config incorrect in production",
       C: "CSS missing",
       D: "Icon missing"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'B'
   },
   {
     id: 30,
@@ -354,23 +354,23 @@ export const healthcareQuestions: Question[] = [
 export const dataAnalysisQuestions: Question[] = [
   {
     id: 1,
-    question: "df['Total'] = df['Price'] + df['Quantity'] gives NaN values. Why?",
+    question: "df['Total'] = df['Price'] + df['Quantity'] gives NaN values.",
     options: {
-      A: "Missing values",
-      B: "Data type mismatch",
+      A: "missing values",
+      B: "data type mismatch",
       C: "Not a Number",
-      D: "None of the above"
+      D: "none of the above"
     },
     correctAnswer: 'C'
   },
   {
     id: 2,
-    question: "df.mean() throws error 'could not convert string to float'. Why?",
+    question: "df.mean() throws error 'could not convert string to float'.",
     options: {
-      A: "Numeric field contains a string value",
-      B: "String field contains a numeric value",
-      C: "Numeric field contains NaN value",
-      D: "None of the above"
+      A: "numeric field contains a string value",
+      B: "string field contains a numeric value",
+      C: "numeric field contains NaN value",
+      D: "none of the above"
     },
     correctAnswer: 'A'
   },
@@ -380,8 +380,8 @@ export const dataAnalysisQuestions: Question[] = [
     options: {
       A: "df.drop('Age')",
       B: "df.drop('Age', axis=1, inplace=True)",
-      C: "df.drop('Age', axis=0, inplace=False)",
-      D: "None of the above"
+      C: "df.drop('Age',axis=0,inpalce=False)",
+      D: "none of the above"
     },
     correctAnswer: 'B'
   },
@@ -391,7 +391,7 @@ export const dataAnalysisQuestions: Question[] = [
     options: {
       A: "df[df['age'] > 30 and df['salary'] > 50000]",
       B: "df[df('age') > 30 and df('salary') > 50000]",
-      C: "df[(df['age'] > 30) & (df['salary'] > 50000)]",
+      C: "(df[df['age'] > 30) & (df['salary'] > 50000])",
       D: "df(df['age'] > 30 & df['salary'] > 50000)"
     },
     correctAnswer: 'C'
@@ -400,7 +400,7 @@ export const dataAnalysisQuestions: Question[] = [
     id: 5,
     question: "What will the output of np.mean([1, 2, 3, np.nan]) be?",
     options: {
-      A: "Syntax error",
+      A: "syntax error",
       B: "2",
       C: "3",
       D: "nan"
@@ -409,56 +409,56 @@ export const dataAnalysisQuestions: Question[] = [
   },
   {
     id: 6,
-    question: "Find the error in df.groupby('Department').mean('Salary')",
+    question: "Find the error in the following: df.groupby('Department').mean('Salary')",
     options: {
       A: "mean('salary') must be in small letter",
       B: "mean() doesn't take column names",
       C: "mean('SALARY') must be in caps",
-      D: "None of the above"
+      D: "none of the above"
     },
     correctAnswer: 'B'
   },
   {
     id: 7,
-    question: "df.describe(include='all', exclude='object') - what's wrong?",
+    question: "df.describe(include='all', exclude='object')",
     options: {
-      A: "Must be exclude first and then include",
-      B: "Cannot use both include and exclude simultaneously",
-      C: "Cannot use all and object",
-      D: "None of the above"
+      A: "it must be exclude first and then include",
+      B: "cannot use both include and exclude simultaneously",
+      C: "cannot use all and object",
+      D: "none of the above"
     },
     correctAnswer: 'B'
   },
   {
     id: 8,
-    question: "If df.fillna(df.mean()) didn't update missing values, the reason is:",
+    question: "If df.fillna(df.mean()) didn't update missing values the reason is:",
     options: {
-      A: "There are no missing values",
-      B: "Must assign back or use inplace=True",
-      C: "Must assign back",
-      D: "Must use inplace = True"
+      A: "there are no missing values",
+      B: "must assign back or use inplace=True",
+      C: "must assign back",
+      D: "must use inplace = True"
     },
     correctAnswer: 'B'
   },
   {
     id: 9,
-    question: "Plotting error in plt.plot(df['date'], df['sales']); plt.show - what's missing?",
+    question: "Plotting: plt.plot(df['date'], df['sales']); plt.show",
     options: {
-      A: "Date and sales cannot be plotted",
-      B: "It must be only sales",
-      C: "It must be only date",
-      D: "Missing parentheses after plt.show()"
+      A: "date and sales cannot be plotted",
+      B: "it must be only sales",
+      C: "it must be only date",
+      D: "missing parentheses after plt.show()"
     },
     correctAnswer: 'D'
   },
   {
     id: 10,
-    question: "Sorting by multiple columns: df.sort_values('City', 'Revenue') - what's wrong?",
+    question: "Trying to sort by multiple columns: df.sort_values('City', 'Revenue')",
     options: {
       A: "It must be (['City', 'Revenue'])",
       B: "It must be (('City', 'Revenue'))",
       C: "It must be (['Revenue', 'City'])",
-      D: "It must be (['City','Revenue')]"
+      D: "It must be (['City','Revenue)]"
     },
     correctAnswer: 'A'
   },
@@ -466,56 +466,56 @@ export const dataAnalysisQuestions: Question[] = [
     id: 11,
     question: "A Pandas DataFrame operation throws KeyError: 'column_name'. What's the most likely reason?",
     options: {
-      A: "Typo or missing column name in DataFrame",
-      B: "Incorrect data type",
+      A: "Incorrect data type",
+      B: "Typo or missing column name in DataFrame",
       C: "Python version issue",
       D: "CSV file too large"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'B'
   },
   {
     id: 12,
     question: "The output of df['col'].mean() is NaN. Why?",
     options: {
-      A: "The column contains non-numeric data or all NaN values",
+      A: "Wrong import statement",
       B: "Function used incorrectly",
-      C: "Wrong import statement",
+      C: "The column contains non-numeric data or all NaN values",
       D: "CSV delimiter issue"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'C'
   },
   {
     id: 13,
     question: "When reading a CSV file, the entire dataset loads into a single column. Debug?",
     options: {
-      A: "Wrong delimiter used in pd.read_csv()",
+      A: "Dataset corrupted",
       B: "CSV file too small",
       C: "Wrong Python version",
-      D: "Dataset corrupted"
+      D: "Wrong delimiter used in pd.read_csv()"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'D'
   },
   {
     id: 14,
     question: "A NumPy operation arr / 0 throws a runtime warning. How to fix?",
     options: {
-      A: "Replace zeros before division or handle with np.errstate()",
+      A: "Update IDE",
       B: "Change dtype to string",
       C: "Increase array size",
-      D: "Update IDE"
+      D: "Replace zeros before division or handle with np.errstate()"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'D'
   },
   {
     id: 15,
     question: "Matplotlib chart shows no figure window. Cause?",
     options: {
-      A: "Missing plt.show()",
+      A: "Font error",
       B: "Wrong dataset",
-      C: "Font error",
+      C: "Missing plt.show()",
       D: "Jupyter cell too small"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'C'
   },
   {
     id: 16,
@@ -532,34 +532,34 @@ export const dataAnalysisQuestions: Question[] = [
     id: 17,
     question: "SQL query returns fewer rows than expected. Cause?",
     options: {
-      A: "Wrong WHERE condition filtering valid data",
-      B: "Too many columns",
+      A: "Too many columns",
+      B: "Wrong WHERE condition filtering valid data",
       C: "Database permission issue",
       D: "Table locked"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'B'
   },
   {
     id: 18,
     question: "A correlation heatmap shows all values as NaN. Why?",
     options: {
-      A: "Data contains non-numeric or constant columns",
+      A: "Wrong color map",
       B: "Plot size too small",
-      C: "Wrong color map",
+      C: "Data contains non-numeric or constant columns",
       D: "CSV not saved"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'C'
   },
   {
     id: 19,
     question: "groupby() operation in Pandas gives DataError: No numeric types to aggregate. Cause?",
     options: {
-      A: "All grouped columns are strings or objects",
+      A: "Wrong version of Pandas",
       B: "Missing import",
       C: "Too many rows",
-      D: "Wrong version of Pandas"
+      D: "All grouped columns are strings or objects"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'D'
   },
   {
     id: 20,
@@ -576,12 +576,12 @@ export const dataAnalysisQuestions: Question[] = [
     id: 21,
     question: "TypeError: unsupported operand type(s) during column arithmetic. Cause?",
     options: {
-      A: "Mixing strings with numeric columns",
-      B: "Wrong library import",
+      A: "Wrong library import",
+      B: "Mixing strings with numeric columns",
       C: "Column names too long",
       D: "CSV not loaded"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'B'
   },
   {
     id: 22,
@@ -598,34 +598,34 @@ export const dataAnalysisQuestions: Question[] = [
     id: 23,
     question: "Jupyter Notebook shows 'Kernel died' when running analysis. Debug?",
     options: {
-      A: "Dataset too large for available memory",
+      A: "Typo in variable name",
       B: "Missing plt.show()",
-      C: "Typo in variable name",
+      C: "Dataset too large for available memory",
       D: "Incorrect Python path"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'C'
   },
   {
     id: 24,
     question: "SettingWithCopyWarning appears in Pandas. What does it mean?",
     options: {
-      A: "Modifying a view instead of a copy of DataFrame",
-      B: "Index out of range",
+      A: "Index out of range",
+      B: "Modifying a view instead of a copy of DataFrame",
       C: "File path not found",
       D: "Library version mismatch"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'B'
   },
   {
     id: 25,
     question: "After merging two DataFrames, unexpected duplication occurs. Why?",
     options: {
-      A: "Merge keys contain duplicate values",
+      A: "Plot issue",
       B: "CSV delimiter mismatch",
       C: "Different data types",
-      D: "Plot issue"
+      D: "Merge keys contain duplicate values"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'D'
   },
   {
     id: 26,
@@ -642,34 +642,34 @@ export const dataAnalysisQuestions: Question[] = [
     id: 27,
     question: "While plotting, plt.plot(x, y) shows a flat line. Cause?",
     options: {
-      A: "y-values all the same or x/y swapped",
-      B: "Too many colors used",
+      A: "Too many colors used",
+      B: "y-values all the same or x/y swapped",
       C: "Axis labels missing",
       D: "CSV header wrong"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'B'
   },
   {
     id: 28,
     question: "Data cleaning function drops too many rows. Why?",
     options: {
-      A: "Condition in dropna() or filter too strict",
+      A: "Missing parentheses",
       B: "Plot not saved",
-      C: "Missing parentheses",
+      C: "Condition in dropna() or filter too strict",
       D: "CSV delimiter wrong"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'C'
   },
   {
     id: 29,
     question: "Pivot table displays NaN for most cells. Cause?",
     options: {
-      A: "Missing values or unmatched keys in group columns",
+      A: "Wrong syntax",
       B: "Wrong color map",
       C: "Chart too small",
-      D: "Wrong syntax"
+      D: "Missing values or unmatched keys in group columns"
     },
-    correctAnswer: 'A'
+    correctAnswer: 'D'
   },
   {
     id: 30,

@@ -6,7 +6,6 @@ import { SignupPage } from './components/SignupPage';
 import { AdminDashboard } from './components/AdminDashboard';
 import { QuizSelection } from './components/QuizSelection';
 import { supabase } from './lib/supabase';
-import { isTestAccount } from './lib/testAccounts';
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -14,8 +13,7 @@ function AppContent() {
   const [userRole, setUserRole] = useState<'user' | 'admin' | null>(null);
   const [roleLoading, setRoleLoading] = useState(true);
   const [selectedQuizId, setSelectedQuizId] = useState<string | null>(null);
-  const [hasAlreadyTaken, setHasAlreadyTaken] = useState(false);
-  const [checkingPreviousAttempt, setCheckingPreviousAttempt] = useState(true);
+  const [checkingIncompleteAttempt, setCheckingIncompleteAttempt] = useState(true);
 
   const handleQuizSelection = (quizId: string) => {
     console.log('=== handleQuizSelection called ===');
@@ -48,71 +46,75 @@ function AppContent() {
     }
   }, [user]);
 
+  // Check for incomplete quiz attempts on login
   useEffect(() => {
-    const checkPreviousAttempt = async () => {
+    const checkIncompleteAttempt = async () => {
       if (!user) {
-        setCheckingPreviousAttempt(false);
-        setHasAlreadyTaken(false); // Reset when user logs out
-        setSelectedQuizId(null); // Reset quiz selection
+        setCheckingIncompleteAttempt(false);
+        setSelectedQuizId(null);
         return;
       }
 
-      if (isTestAccount(user?.email)) {
-        setCheckingPreviousAttempt(false);
-        setHasAlreadyTaken(false); // Test accounts can always take quizzes
-        setSelectedQuizId(null);
+      if (!userRole || userRole === 'admin') {
+        setCheckingIncompleteAttempt(false);
         return;
       }
 
       try {
-        const { data, error } = await supabase
+        console.log('Checking for incomplete attempts for user:', user.id);
+        
+        // First, let's see ALL attempts for debugging
+        const { data: allAttempts } = await supabase
           .from('quiz_attempts')
-          .select('id, quiz_type')
+          .select('*')
+          .eq('user_id', user.id);
+        
+        console.log('All quiz attempts for user:', allAttempts);
+        
+        // Check if there's an incomplete quiz attempt
+        const { data: incompleteAttempt, error } = await supabase
+          .from('quiz_attempts')
+          .select('quiz_type, id, completed_at')
           .eq('user_id', user.id)
-          .limit(1);
+          .is('completed_at', null) // Only incomplete attempts
+          .limit(1)
+          .maybeSingle();
 
-        console.log('Previous attempt check:', { data, error });
+        console.log('Incomplete attempt query result:', { data: incompleteAttempt, error });
 
         if (error) {
-          console.error('Error checking previous attempt:', error);
-          setHasAlreadyTaken(false); // On error, assume no previous attempt
-          setSelectedQuizId(null);
-        } else if (data && data.length > 0) {
-          console.log('Found previous attempt:', data[0]);
-          setHasAlreadyTaken(true);
-          if (data[0].quiz_type) {
-            console.log('Setting quiz_type to:', data[0].quiz_type);
-            setSelectedQuizId(data[0].quiz_type);
-          } else {
-            console.warn('quiz_type is null, defaulting to healthcare');
-            setSelectedQuizId('healthcare'); // Default to healthcare if null
-          }
+          console.error('Error checking incomplete attempt:', error);
+        }
+
+        if (incompleteAttempt && incompleteAttempt.quiz_type) {
+          console.log('✅ Found incomplete attempt! Resuming quiz:', {
+            quiz_type: incompleteAttempt.quiz_type,
+            attempt_id: incompleteAttempt.id
+          });
+          setSelectedQuizId(incompleteAttempt.quiz_type);
         } else {
-          // No previous attempts found - new user can take quiz
-          setHasAlreadyTaken(false);
+          console.log('No incomplete attempts found - showing quiz selection');
           setSelectedQuizId(null);
         }
       } catch (error) {
-        console.error('Exception checking previous attempt:', error);
-        setHasAlreadyTaken(false);
+        console.error('Exception checking incomplete attempt:', error);
         setSelectedQuizId(null);
       } finally {
-        setCheckingPreviousAttempt(false);
+        setCheckingIncompleteAttempt(false);
       }
     };
 
-    checkPreviousAttempt();
-  }, [user]);
+    checkIncompleteAttempt();
+  }, [user, userRole]);
 
   console.log('=== AppContent Render ===');
   console.log('selectedQuizId:', selectedQuizId);
-  console.log('hasAlreadyTaken:', hasAlreadyTaken);
   console.log('user:', user?.email);
   console.log('loading:', loading);
   console.log('roleLoading:', roleLoading);
-  console.log('checkingPreviousAttempt:', checkingPreviousAttempt);
+  console.log('checkingIncompleteAttempt:', checkingIncompleteAttempt);
 
-  if (loading || (user && roleLoading) || (user && checkingPreviousAttempt)) {
+  if (loading || (user && roleLoading) || (user && checkingIncompleteAttempt)) {
     console.log('Showing loading screen');
     return null;
   }
@@ -127,11 +129,6 @@ function AppContent() {
 
   if (userRole === 'admin') {
     return <AdminDashboard />;
-  }
-
-  if (hasAlreadyTaken && !isTestAccount(user?.email)) {
-    console.log('Showing QuizGame with hasAlreadyTaken=true');
-    return <QuizGame quizId={selectedQuizId || 'healthcare'} hasAlreadyTaken={true} />;
   }
 
   if (!selectedQuizId) {

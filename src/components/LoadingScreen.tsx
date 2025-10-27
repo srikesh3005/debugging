@@ -1,6 +1,10 @@
 import { Logo } from './Logo';
 
-export function LoadingScreen() {
+interface LoadingScreenProps {
+  message?: string;
+}
+
+export function LoadingScreen({ message = 'Loading Quiz...' }: LoadingScreenProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
       <div className="text-center">
@@ -11,7 +15,7 @@ export function LoadingScreen() {
             <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
             <div className="w-3 h-3 bg-yellow-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
           </div>
-          <p className="mt-4 text-gray-600 font-semibold text-lg">Loading Quiz...</p>
+          <p className="mt-4 text-gray-600 font-semibold text-lg">{message}</p>
         </div>
       </div>
     </div>
