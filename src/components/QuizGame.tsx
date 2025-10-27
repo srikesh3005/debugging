@@ -38,7 +38,6 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
   // Initialize anti-cheat system
   const {
     warnings,
-    isFullscreen,
     hasLeftTab,
     requestFullscreen,
   } = useAntiCheat({
@@ -132,6 +131,11 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
   };
 
   const calculateScore = () => {
+    console.log('=== CALCULATING SCORE ===');
+    console.log('Total questions:', quizQuestions.length);
+    console.log('Answers collected:', answers);
+    console.log('Number of answers:', Object.keys(answers).length);
+    
     const score = quizQuestions.reduce((total, question) => {
       const isCorrect = answers[question.id] === question.correctAnswer;
       console.log(`Q${question.id}: Selected=${answers[question.id]}, Correct=${question.correctAnswer}, IsCorrect=${isCorrect}`);
@@ -147,6 +151,7 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
       totalAnswered: Object.keys(answers).length,
       percentage: Math.round((score / quizQuestions.length) * 100)
     });
+    console.log('=== END SCORE CALCULATION ===');
     
     return score;
   };
@@ -187,25 +192,50 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
 
       console.log('Quiz attempt update result:', { data, error: attemptError });
 
-      if (attemptError) throw attemptError;
+      if (attemptError) {
+        console.error('Error updating quiz attempt:', attemptError);
+        throw attemptError;
+      }
+
+      if (!data || data.length === 0) {
+        console.error('No data returned from update - attempt might not exist:', attemptId);
+      } else {
+        console.log('Successfully updated quiz attempt with score:', data[0]);
+      }
 
       // Save individual answers
-      const answerPromises = quizQuestions.map((question) => {
+      console.log('Saving individual answers for', quizQuestions.length, 'questions');
+      const answerPromises = quizQuestions.map((question, index) => {
         const selectedAnswer = answers[question.id];
-        if (!selectedAnswer) return null;
+        if (!selectedAnswer) {
+          console.warn(`No answer for question ${question.id} (index ${index})`);
+          return null;
+        }
 
-        return supabase.from('quiz_answers').insert({
+        const answerData = {
           attempt_id: attemptId,
           question_id: question.id,
           selected_answer: selectedAnswer,
           correct_answer: question.correctAnswer,
           is_correct: selectedAnswer === question.correctAnswer
-        });
+        };
+        
+        console.log(`Saving answer for Q${question.id}:`, answerData);
+
+        return supabase.from('quiz_answers').insert(answerData);
       });
 
-      await Promise.all(answerPromises.filter(Boolean));
-    } catch (error) {
+      const answerResults = await Promise.all(answerPromises.filter(Boolean));
+      console.log('All answers saved. Results:', answerResults);
       
+      // Check for any errors in answer saving
+      const answerErrors = answerResults.filter(r => r && r.error);
+      if (answerErrors.length > 0) {
+        console.error('Errors saving some answers:', answerErrors);
+      }
+      
+    } catch (error) {
+      console.error('Error in saveQuizResults:', error);
     } finally {
       setIsSaving(false);
     }
@@ -298,19 +328,6 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
           onDismiss={() => setShowWarning(false)}
           requestFullscreen={requestFullscreen}
         />
-      )}
-
-      {/* Fullscreen prompt */}
-      {!isFullscreen && (
-        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-yellow-100 border-2 border-yellow-500 text-gray-800 px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-3">
-          <span className="text-sm font-semibold">⚠️ Please enter fullscreen mode for the quiz</span>
-          <button
-            onClick={requestFullscreen}
-            className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-1 rounded font-semibold text-sm transition-colors"
-          >
-            Enter Fullscreen
-          </button>
-        </div>
       )}
 
       {/* Tab switch alert */}
