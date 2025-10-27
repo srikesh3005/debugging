@@ -67,16 +67,23 @@ function AppContent() {
           .eq('user_id', user.id)
           .limit(1);
 
+        console.log('Previous attempt check:', { data, error });
+
         if (error) {
-          
+          console.error('Error checking previous attempt:', error);
         } else if (data && data.length > 0) {
+          console.log('Found previous attempt:', data[0]);
           setHasAlreadyTaken(true);
           if (data[0].quiz_type) {
+            console.log('Setting quiz_type to:', data[0].quiz_type);
             setSelectedQuizId(data[0].quiz_type);
+          } else {
+            console.warn('quiz_type is null, defaulting to healthcare');
+            setSelectedQuizId('healthcare'); // Default to healthcare if null
           }
         }
       } catch (error) {
-        
+        console.error('Exception checking previous attempt:', error);
       } finally {
         setCheckingPreviousAttempt(false);
       }

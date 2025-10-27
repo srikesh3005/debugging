@@ -142,7 +142,10 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
   };
 
   const saveQuizResults = async () => {
-    if (!user || isSaving || !attemptId) return; // Need attemptId to save
+    if (!user || isSaving || !attemptId) {
+      console.log('Cannot save quiz results:', { user: !!user, isSaving, attemptId });
+      return;
+    }
     
     setIsSaving(true);
 
@@ -150,9 +153,18 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
     const percentage = Math.round((score / quizQuestions.length) * 100);
     const timeTaken = Math.round((Date.now() - startTime) / 1000); // in seconds
 
+    console.log('Saving quiz results:', {
+      attemptId,
+      score,
+      percentage,
+      timeTaken,
+      totalQuestions: quizQuestions.length,
+      answersCount: Object.keys(answers).length
+    });
+
     try {
       // Update quiz attempt with final results
-      const { error: attemptError } = await supabase
+      const { data, error: attemptError } = await supabase
         .from('quiz_attempts')
         .update({
           score,
@@ -160,7 +172,10 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
           time_taken: timeTaken,
           completed_at: new Date().toISOString()
         })
-        .eq('id', attemptId);
+        .eq('id', attemptId)
+        .select();
+
+      console.log('Quiz attempt update result:', { data, error: attemptError });
 
       if (attemptError) throw attemptError;
 
@@ -258,7 +273,7 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
 
       {!isTest && (
         <OverallTimer
-          duration={30 * 60}
+          duration={60}
           onTimeUp={handleOverallTimeUp}
           isActive={overallTimerActive && !isCompleted}
         />
@@ -302,7 +317,7 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
       <div className="mb-6">
         <Timer
           key={timerKey}
-          duration={15}
+          duration={60}
           onTimeUp={handleTimeUp}
           isActive={true}
         />

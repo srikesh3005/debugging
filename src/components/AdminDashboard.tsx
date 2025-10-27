@@ -53,14 +53,20 @@ export function AdminDashboard() {
 
   const fetchResults = async () => {
     try {
+      console.log('Fetching quiz results from quiz_results_view...');
+      
       const { data, error } = await supabase
         .from('quiz_results_view')
         .select('*')
         .order('completed_at', { ascending: false });
 
+      console.log('Quiz results data:', data);
+      console.log('Quiz results error:', error);
+
       if (error) throw error;
       setResults(data || []);
     } catch (err: any) {
+      console.error('Error fetching quiz results:', err);
       setError(err.message);
     } finally {
       setLoading(false);
