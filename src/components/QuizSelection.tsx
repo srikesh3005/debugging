@@ -82,7 +82,7 @@ export function QuizSelection({ onSelectQuiz }: QuizSelectionProps) {
                   <p className="text-blue-800 font-semibold">
                     {category.questions.length} Questions
                   </p>
-                  <p className="text-blue-600 text-sm">60 seconds total</p>
+                  <p className="text-blue-600 text-sm">60 minutes total • 120 seconds per question</p>
                 </div>
                 <button className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white py-3 rounded-full font-bold text-lg transition-all">
                   Start Quiz

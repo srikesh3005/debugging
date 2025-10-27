@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { quizCategories, Question } from '../data/quizData';
 import { QuizCard } from './QuizCard';
 import { ProgressBar } from './ProgressBar';
@@ -30,6 +30,7 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
   const [showWarning, setShowWarning] = useState(false);
   const [lastViolationType, setLastViolationType] = useState<string>('');
   const [isSaving, setIsSaving] = useState(false);
+  const isCreatingAttempt = useRef(false);
 
   const selectedQuiz = quizCategories.find(q => q.id === quizId);
   const quizQuestions: Question[] = selectedQuiz?.questions || [];
@@ -48,8 +49,10 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
       console.log('Max warnings reached, but continuing quiz');
     },
     onWarning: (event) => {
+      console.log('⚠️ Anti-cheat warning triggered:', event);
       setLastViolationType(event.type);
       setShowWarning(true);
+      console.log('showWarning set to true, lastViolationType:', event.type);
     },
   });
 
@@ -59,14 +62,18 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
 
   useEffect(() => {
     const createAttempt = async () => {
-      if (!user || hasAlreadyTaken || attemptId) {
+      if (!user || hasAlreadyTaken || attemptId || isCreatingAttempt.current) {
         console.log('Skipping attempt creation:', { 
           hasUser: !!user, 
           hasAlreadyTaken, 
-          attemptId 
+          attemptId,
+          isCreating: isCreatingAttempt.current
         });
         return;
       }
+
+      // Set flag to prevent duplicate calls
+      isCreatingAttempt.current = true;
 
       try {
         // First, check if an attempt already exists for this quiz
@@ -111,6 +118,25 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
           .single();
 
         if (error) {
+          // If we get a duplicate key error, try to fetch the existing attempt
+          if (error.code === '23505') {
+            console.log('Duplicate detected, fetching existing attempt...');
+            const { data: existing } = await supabase
+              .from('quiz_attempts')
+              .select('id')
+              .eq('user_id', user.id)
+              .eq('quiz_type', quizId)
+              .eq('is_test', isTest)
+              .is('completed_at', null)
+              .maybeSingle();
+            
+            if (existing) {
+              console.log('Using existing attempt after duplicate error:', existing.id);
+              setAttemptId(existing.id);
+              return;
+            }
+          }
+          
           console.error('Error creating quiz attempt:', error);
           console.error('Error details:', JSON.stringify(error, null, 2));
           throw error;
@@ -123,6 +149,9 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
         }
       } catch (error) {
         console.error('Failed to create quiz attempt:', error);
+      } finally {
+        // Reset flag after attempt
+        isCreatingAttempt.current = false;
       }
     };
 
@@ -339,7 +368,7 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
 
       {!isTest && (
         <OverallTimer
-          duration={60}
+          duration={3600}
           onTimeUp={handleOverallTimeUp}
           isActive={overallTimerActive && !isCompleted}
         />
@@ -363,7 +392,7 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
       <div className="mb-6">
         <Timer
           key={timerKey}
-          duration={60}
+          duration={120}
           onTimeUp={handleTimeUp}
           isActive={true}
         />

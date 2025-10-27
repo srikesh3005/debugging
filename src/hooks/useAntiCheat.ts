@@ -59,23 +59,34 @@ export function useAntiCheat({
     const now = Date.now();
     const lastTime = lastWarningTime.current[event.type] || 0;
     
+    // Debounce: prevent duplicate warnings within 2 seconds
     if (now - lastTime < 2000) {
+      console.log('⏭️ Skipping duplicate warning (debounced):', event.type);
       return;
     }
     
     lastWarningTime.current[event.type] = now;
     
     const newWarningCount = warningsRef.current + 1;
+    
+    console.log('⚠️ Adding warning:', {
+      type: event.type,
+      newCount: newWarningCount,
+      maxWarnings,
+      details: event.details
+    });
 
     logEvent(event);
 
     if (onWarning) {
+      console.log('📢 Calling onWarning callback with event:', event);
       onWarning(event);
     }
     
     setWarnings(newWarningCount);
 
     if (newWarningCount >= maxWarnings && onMaxWarningsReached) {
+      console.log('🚨 Max warnings reached, calling onMaxWarningsReached');
       setTimeout(() => {
         onMaxWarningsReached();
       }, 100);
@@ -104,12 +115,16 @@ export function useAntiCheat({
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.hidden) {
+        console.log('🔍 Tab switch detected - visibility changed to hidden');
         setHasLeftTab(true);
         addWarning({
           type: 'tab_switch',
           timestamp: Date.now(),
           details: 'User switched tabs or minimized window',
         });
+      } else {
+        console.log('✅ User returned to tab');
+        setHasLeftTab(false);
       }
     };
 
@@ -121,6 +136,7 @@ export function useAntiCheat({
         (document as any).msFullscreenElement
       );
 
+      console.log('🖥️ Fullscreen change detected:', isCurrentlyFullscreen ? 'Entered' : 'Exited');
       setIsFullscreen(isCurrentlyFullscreen);
 
       if (isCurrentlyFullscreen) {
@@ -128,6 +144,7 @@ export function useAntiCheat({
       }
 
       if (!isCurrentlyFullscreen && requireFullscreen && hasEnteredFullscreenOnce.current) {
+        console.log('⚠️ Fullscreen exit violation detected');
         addWarning({
           type: 'fullscreen_exit',
           timestamp: Date.now(),
