@@ -38,7 +38,6 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
   // Initialize anti-cheat system
   const {
     warnings,
-    hasLeftTab,
     requestFullscreen,
   } = useAntiCheat({
     userId: user?.id || '',
@@ -60,10 +59,37 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
 
   useEffect(() => {
     const createAttempt = async () => {
-      if (!user || hasAlreadyTaken || attemptId) return;
+      if (!user || hasAlreadyTaken || attemptId) {
+        console.log('Skipping attempt creation:', { 
+          hasUser: !!user, 
+          hasAlreadyTaken, 
+          attemptId 
+        });
+        return;
+      }
 
       try {
-        console.log('Creating quiz attempt with:', {
+        // First, check if an attempt already exists for this quiz
+        const { data: existingAttempt, error: checkError } = await supabase
+          .from('quiz_attempts')
+          .select('id')
+          .eq('user_id', user.id)
+          .eq('quiz_type', quizId)
+          .eq('is_test', isTest)
+          .is('completed_at', null) // Only incomplete attempts
+          .maybeSingle();
+
+        if (checkError) {
+          console.error('Error checking existing attempt:', checkError);
+        }
+
+        if (existingAttempt) {
+          console.log('Found existing incomplete attempt, reusing:', existingAttempt.id);
+          setAttemptId(existingAttempt.id);
+          return;
+        }
+
+        console.log('Creating new quiz attempt with:', {
           user_id: user.id,
           quiz_type: quizId,
           is_test: isTest,
@@ -101,7 +127,7 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
     };
 
     createAttempt();
-  }, [user, hasAlreadyTaken, attemptId, quizQuestions.length, quizId, isTest]);
+  }, [user, hasAlreadyTaken, attemptId, quizId, isTest]); // Removed quizQuestions.length from dependencies
 
   const handleAnswer = (questionId: number, answer: 'A' | 'B' | 'C' | 'D') => {
     setAnswers((prev) => ({ ...prev, [questionId]: answer }));
@@ -328,13 +354,6 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
           onDismiss={() => setShowWarning(false)}
           requestFullscreen={requestFullscreen}
         />
-      )}
-
-      {/* Tab switch alert */}
-      {hasLeftTab && (
-        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-red-100 border-2 border-red-500 text-gray-800 px-6 py-3 rounded-lg shadow-lg z-50 animate-pulse">
-          <span className="text-sm font-semibold">⚠️ Warning: Tab switching detected! ({warnings}/3)</span>
-        </div>
       )}
       
       <div className="w-full max-w-2xl mb-6 flex items-center justify-between">
