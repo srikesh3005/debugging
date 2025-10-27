@@ -132,12 +132,23 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
   };
 
   const calculateScore = () => {
-    return quizQuestions.reduce((score, question) => {
-      if (answers[question.id] === question.correctAnswer) {
-        return score + 1;
+    const score = quizQuestions.reduce((total, question) => {
+      const isCorrect = answers[question.id] === question.correctAnswer;
+      console.log(`Q${question.id}: Selected=${answers[question.id]}, Correct=${question.correctAnswer}, IsCorrect=${isCorrect}`);
+      if (isCorrect) {
+        return total + 1;
       }
-      return score;
+      return total;
     }, 0);
+    
+    console.log('Final calculated score:', {
+      score,
+      totalQuestions: quizQuestions.length,
+      totalAnswered: Object.keys(answers).length,
+      percentage: Math.round((score / quizQuestions.length) * 100)
+    });
+    
+    return score;
   };
 
   const saveQuizResults = async () => {
