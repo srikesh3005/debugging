@@ -15,6 +15,11 @@ SELECT
     qa.score as current_score,
     qa.percentage as current_percentage,
     qa.total_questions,
+    qa.time_taken,
+    CONCAT(
+        FLOOR(qa.time_taken / 60), ':',
+        LPAD((qa.time_taken % 60)::text, 2, '0')
+    ) as time_formatted,
     qa.completed_at,
     COUNT(qans.id) as total_answers_saved,
     COUNT(CASE WHEN qans.is_correct = true THEN 1 END) as correct_answers
@@ -22,7 +27,7 @@ FROM quiz_attempts qa
 LEFT JOIN profiles p ON qa.user_id = p.id
 LEFT JOIN quiz_answers qans ON qa.id = qans.attempt_id
 WHERE qa.completed_at IS NOT NULL
-GROUP BY qa.id, p.email, qa.quiz_type, qa.score, qa.percentage, qa.total_questions, qa.completed_at
+GROUP BY qa.id, p.email, qa.quiz_type, qa.score, qa.percentage, qa.total_questions, qa.time_taken, qa.completed_at
 ORDER BY qa.completed_at DESC;
 
 -- ====================================================
@@ -56,6 +61,11 @@ SELECT
     qa.score as updated_score,
     qa.percentage as updated_percentage,
     qa.total_questions,
+    qa.time_taken,
+    CONCAT(
+        FLOOR(qa.time_taken / 60), ':',
+        LPAD((qa.time_taken % 60)::text, 2, '0')
+    ) as time_formatted,
     qa.completed_at,
     COUNT(qans.id) as total_answers_saved,
     COUNT(CASE WHEN qans.is_correct = true THEN 1 END) as correct_answers
@@ -63,7 +73,7 @@ FROM quiz_attempts qa
 LEFT JOIN profiles p ON qa.user_id = p.id
 LEFT JOIN quiz_answers qans ON qa.id = qans.attempt_id
 WHERE qa.completed_at IS NOT NULL
-GROUP BY qa.id, p.email, qa.quiz_type, qa.score, qa.percentage, qa.total_questions, qa.completed_at
+GROUP BY qa.id, p.email, qa.quiz_type, qa.score, qa.percentage, qa.total_questions, qa.time_taken, qa.completed_at
 ORDER BY qa.completed_at DESC;
 
 -- ====================================================
@@ -121,6 +131,11 @@ SELECT
     p.email,
     qa.quiz_type,
     qa.score,
+    qa.time_taken,
+    CONCAT(
+        FLOOR(qa.time_taken / 60), ':',
+        LPAD((qa.time_taken % 60)::text, 2, '0')
+    ) as time_formatted,
     qa.completed_at,
     COUNT(qans.id) as answer_count,
     CASE 
@@ -132,7 +147,7 @@ FROM quiz_attempts qa
 LEFT JOIN profiles p ON qa.user_id = p.id
 LEFT JOIN quiz_answers qans ON qa.id = qans.attempt_id
 WHERE qa.completed_at IS NOT NULL
-GROUP BY qa.id, p.email, qa.quiz_type, qa.score, qa.completed_at
+GROUP BY qa.id, p.email, qa.quiz_type, qa.score, qa.time_taken, qa.completed_at
 HAVING qa.score = 0
 ORDER BY qa.completed_at DESC;
 

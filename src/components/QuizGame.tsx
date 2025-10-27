@@ -367,13 +367,7 @@ export function QuizGame({ quizId }: QuizGameProps) {
           </div>
           <div className="flex gap-4 justify-center">
             <button
-              onClick={() => window.location.reload()}
-              className="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform"
-            >
-              Take Another Quiz
-            </button>
-            <button
-              onClick={signOut}
+              onClick={() => signOut()}
               className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform flex items-center gap-2"
             >
               <LogOut className="w-5 h-5" />

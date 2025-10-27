@@ -186,7 +186,7 @@ export function AdminDashboard() {
               </div>
             </div>
             <button
-              onClick={signOut}
+              onClick={() => signOut()}
               className="flex items-center gap-2 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition-all hover:scale-105"
             >
               <LogOut className="w-5 h-5" />
