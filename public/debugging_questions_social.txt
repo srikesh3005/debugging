@@ -52,6 +52,87 @@ C. A stream of updates and posts from users
 D. A video player
 Answer: C
 
+7.
+What is the main purpose of a social networking app?
+A) File storage
+B) Online communication and connection
+C) Programming code sharing
+D) Image compression
+Answer: B
+
+8
+Which of the following is an example of a professional social networking app?
+A) Instagram
+B) Snapchat
+C) LinkedIn
+D) TikTok
+Answer: C
+
+9
+ In social apps, what does the term feed usually refer to?
+A) A list of recommended users
+B) A stream of posts and updates from connections
+C) A chat window
+D) A list of blocked users
+Answer: B
+
+10
+What is user engagement in a social app?
+A) Number of ads shown per day
+B) Frequency of app crashes
+C) Interaction of users through likes, shares, comments, etc.
+D) Time taken to load posts
+Answer: C
+
+11
+Which of the following is a key feature of most social apps?
+A) Compiler integration
+B) User profile creation
+C) Data encryption only
+D) File version control
+Answer: B
+
+12
+
+The feature that allows users to temporarily share photos or videos that disappear after 24 hours is known as:
+A) Highlights
+B) Reels
+C) Stories
+D) Posts
+Answer: C
+
+13
+Which protocol is most commonly used to secure communication in social apps?
+A) FTP
+B) SMTP
+C) HTTP
+D) HTTPS
+Answer: D
+
+14
+What does algorithmic feed mean?
+A) Posts are shown randomly
+B) Posts appear in chronological order
+C) Posts are prioritized using user behavior and preferences
+D) Posts are manually selected by admins
+Answer: C
+
+15
+Which of the following is an example of a community-based social app?
+A) Reddit
+B) Netflix
+C) YouTube Premium
+D) Amazon
+Answer: A
+
+16
+What does end-to-end encryption ensure in a messaging app?
+A) Only sender and receiver can read the messages
+B) The app saves all messages permanently
+C) Messages can be read by advertisers
+D) Messages are sent as plain text
+Answer: A
+
 17
 Which technology helps enable real-time chat?
 

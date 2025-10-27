@@ -753,6 +753,116 @@ export const socialAppQuestions: Question[] = [
   },
   {
     id: 7,
+    question: "What is the main purpose of a social networking app?",
+    options: {
+      A: "File storage",
+      B: "Online communication and connection",
+      C: "Programming code sharing",
+      D: "Image compression"
+    },
+    correctAnswer: 'B'
+  },
+  {
+    id: 8,
+    question: "Which of the following is an example of a professional social networking app?",
+    options: {
+      A: "Instagram",
+      B: "Snapchat",
+      C: "LinkedIn",
+      D: "TikTok"
+    },
+    correctAnswer: 'C'
+  },
+  {
+    id: 9,
+    question: "In social apps, what does the term feed usually refer to?",
+    options: {
+      A: "A list of recommended users",
+      B: "A stream of posts and updates from connections",
+      C: "A chat window",
+      D: "A list of blocked users"
+    },
+    correctAnswer: 'B'
+  },
+  {
+    id: 10,
+    question: "What is user engagement in a social app?",
+    options: {
+      A: "Number of ads shown per day",
+      B: "Frequency of app crashes",
+      C: "Interaction of users through likes, shares, comments, etc.",
+      D: "Time taken to load posts"
+    },
+    correctAnswer: 'C'
+  },
+  {
+    id: 11,
+    question: "Which of the following is a key feature of most social apps?",
+    options: {
+      A: "Compiler integration",
+      B: "User profile creation",
+      C: "Data encryption only",
+      D: "File version control"
+    },
+    correctAnswer: 'B'
+  },
+  {
+    id: 12,
+    question: "The feature that allows users to temporarily share photos or videos that disappear after 24 hours is known as:",
+    options: {
+      A: "Highlights",
+      B: "Reels",
+      C: "Stories",
+      D: "Posts"
+    },
+    correctAnswer: 'C'
+  },
+  {
+    id: 13,
+    question: "Which protocol is most commonly used to secure communication in social apps?",
+    options: {
+      A: "FTP",
+      B: "SMTP",
+      C: "HTTP",
+      D: "HTTPS"
+    },
+    correctAnswer: 'D'
+  },
+  {
+    id: 14,
+    question: "What does algorithmic feed mean?",
+    options: {
+      A: "Posts are shown randomly",
+      B: "Posts appear in chronological order",
+      C: "Posts are prioritized using user behavior and preferences",
+      D: "Posts are manually selected by admins"
+    },
+    correctAnswer: 'C'
+  },
+  {
+    id: 15,
+    question: "Which of the following is an example of a community-based social app?",
+    options: {
+      A: "Reddit",
+      B: "Netflix",
+      C: "YouTube Premium",
+      D: "Amazon"
+    },
+    correctAnswer: 'A'
+  },
+  {
+    id: 16,
+    question: "What does end-to-end encryption ensure in a messaging app?",
+    options: {
+      A: "Only sender and receiver can read the messages",
+      B: "The app saves all messages permanently",
+      C: "Messages can be read by advertisers",
+      D: "Messages are sent as plain text"
+    },
+    correctAnswer: 'A'
+  },
+  {
+    id: 17,
     question: "Which technology helps enable real-time chat?",
     options: {
       A: "WebSockets",
@@ -763,7 +873,7 @@ export const socialAppQuestions: Question[] = [
     correctAnswer: 'A'
   },
   {
-    id: 8,
+    id: 18,
     question: "Why is image compression important in apps?",
     options: {
       A: "To reduce storage and loading time",
@@ -774,7 +884,7 @@ export const socialAppQuestions: Question[] = [
     correctAnswer: 'A'
   },
   {
-    id: 9,
+    id: 19,
     question: "What does content moderation mean?",
     options: {
       A: "Adding more advertisements",
@@ -785,7 +895,7 @@ export const socialAppQuestions: Question[] = [
     correctAnswer: 'B'
   },
   {
-    id: 10,
+    id: 20,
     question: "How can social applications handle many users efficiently?",
     options: {
       A: "By deleting old data",
@@ -796,7 +906,7 @@ export const socialAppQuestions: Question[] = [
     correctAnswer: 'C'
   },
   {
-    id: 11,
+    id: 21,
     question: "A chat feature in a social app shows messages in the wrong order. What is the likely cause?",
     options: {
       A: "Missing sort by timestamp in database query",
@@ -807,7 +917,7 @@ export const socialAppQuestions: Question[] = [
     correctAnswer: 'A'
   },
   {
-    id: 12,
+    id: 22,
     question: "The 'like' count doesn't update until the page is refreshed. What could fix this?",
     options: {
       A: "Increase CSS z-index",
@@ -818,7 +928,7 @@ export const socialAppQuestions: Question[] = [
     correctAnswer: 'D'
   },
   {
-    id: 13,
+    id: 23,
     question: "User profile pictures fail to load on the feed. What's the most probable cause?",
     options: {
       A: "Database query limit exceeded",
@@ -829,7 +939,7 @@ export const socialAppQuestions: Question[] = [
     correctAnswer: 'B'
   },
   {
-    id: 14,
+    id: 24,
     question: "A social app's login API keeps returning 400 Bad Request. Why?",
     options: {
       A: "HTML tag mismatch",
@@ -840,7 +950,7 @@ export const socialAppQuestions: Question[] = [
     correctAnswer: 'C'
   },
   {
-    id: 15,
+    id: 25,
     question: "Notifications are delayed by several minutes. What's the likely issue?",
     options: {
       A: "Message queue (e.g., RabbitMQ or Firebase) processing lag",
@@ -851,7 +961,7 @@ export const socialAppQuestions: Question[] = [
     correctAnswer: 'A'
   },
   {
-    id: 16,
+    id: 26,
     question: "User posts disappear after refreshing the page. Why?",
     options: {
       A: "CSS overflow hidden",
@@ -862,7 +972,7 @@ export const socialAppQuestions: Question[] = [
     correctAnswer: 'B'
   },
   {
-    id: 17,
+    id: 27,
     question: "When uploading an image, the app shows 'Unsupported file type.' Debug?",
     options: {
       A: "CSS media query missing",
@@ -873,7 +983,7 @@ export const socialAppQuestions: Question[] = [
     correctAnswer: 'C'
   },
   {
-    id: 18,
+    id: 28,
     question: "The search bar in the social app returns no results. Debug?",
     options: {
       A: "Browser not supported",
@@ -884,7 +994,7 @@ export const socialAppQuestions: Question[] = [
     correctAnswer: 'D'
   },
   {
-    id: 19,
+    id: 29,
     question: "Users report their passwords never reset via email. Debug?",
     options: {
       A: "Email server misconfigured or SMTP authentication failed",
@@ -895,7 +1005,7 @@ export const socialAppQuestions: Question[] = [
     correctAnswer: 'A'
   },
   {
-    id: 20,
+    id: 30,
     question: "A social media app shows duplicate friend requests. Debug?",
     options: {
       A: "JavaScript import missing",
@@ -904,116 +1014,6 @@ export const socialAppQuestions: Question[] = [
       D: "Session expired"
     },
     correctAnswer: 'B'
-  },
-  {
-    id: 21,
-    question: "Social app feed loads very slowly with many posts. Fix?",
-    options: {
-      A: "Implement pagination or infinite scroll with lazy loading",
-      B: "Reduce CSS file size",
-      C: "Change font family",
-      D: "Remove all images"
-    },
-    correctAnswer: 'A'
-  },
-  {
-    id: 22,
-    question: "Users can't mention (@) other users in comments. Cause?",
-    options: {
-      A: "Mention parsing logic missing in backend or frontend",
-      B: "CSS color wrong",
-      C: "Font too small",
-      D: "Browser cache"
-    },
-    correctAnswer: 'A'
-  },
-  {
-    id: 23,
-    question: "Video playback fails on mobile devices. Debug?",
-    options: {
-      A: "Video format not supported or codec incompatibility",
-      B: "CSS animation issue",
-      C: "Font mismatch",
-      D: "Wrong icon"
-    },
-    correctAnswer: 'A'
-  },
-  {
-    id: 24,
-    question: "Hashtag search returns incorrect posts. Why?",
-    options: {
-      A: "Database query not matching hashtag format or case sensitivity",
-      B: "CSS border missing",
-      C: "Font color wrong",
-      D: "JavaScript disabled"
-    },
-    correctAnswer: 'A'
-  },
-  {
-    id: 25,
-    question: "Users report seeing other users' private messages. Critical bug - cause?",
-    options: {
-      A: "Authorization check missing in API endpoint",
-      B: "CSS visibility issue",
-      C: "Font rendering problem",
-      D: "Image compression"
-    },
-    correctAnswer: 'A'
-  },
-  {
-    id: 26,
-    question: "Social app crashes when users upload large images. Fix?",
-    options: {
-      A: "Add file size validation and compression before upload",
-      B: "Change CSS layout",
-      C: "Update font library",
-      D: "Clear browser cookies"
-    },
-    correctAnswer: 'A'
-  },
-  {
-    id: 27,
-    question: "Real-time notifications don't work on iOS. Debug?",
-    options: {
-      A: "APNs certificate expired or push notification permission not requested",
-      B: "CSS not loaded",
-      C: "Font mismatch",
-      D: "Icon missing"
-    },
-    correctAnswer: 'A'
-  },
-  {
-    id: 28,
-    question: "User blocking feature doesn't prevent blocked users from viewing profile. Fix?",
-    options: {
-      A: "Add server-side authorization check in profile API endpoint",
-      B: "Update CSS display property",
-      C: "Change font color",
-      D: "Compress images"
-    },
-    correctAnswer: 'A'
-  },
-  {
-    id: 29,
-    question: "Activity feed shows posts from users who unfollowed. Cause?",
-    options: {
-      A: "Feed query not filtering by current follower relationships",
-      B: "CSS z-index wrong",
-      C: "Font too large",
-      D: "Browser zoom"
-    },
-    correctAnswer: 'A'
-  },
-  {
-    id: 30,
-    question: "Comment section allows XSS attacks. Critical fix needed?",
-    options: {
-      A: "Sanitize user input and escape HTML special characters",
-      B: "Change CSS padding",
-      C: "Update font family",
-      D: "Compress images"
-    },
-    correctAnswer: 'A'
   }
 ];
 
