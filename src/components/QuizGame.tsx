@@ -44,11 +44,10 @@ export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: Qu
   } = useAntiCheat({
     userId: user?.id || '',
     attemptId: attemptId || undefined,
-    maxWarnings: 4,
-    onMaxWarningsReached: async () => {
-      setShowWarning(false);
-      await saveQuizResults();
-      setIsCompleted(true);
+    maxWarnings: 100, // Set high limit so it never auto-ends
+    onMaxWarningsReached: () => {
+      // Just track warnings, don't end quiz automatically
+      console.log('Max warnings reached, but continuing quiz');
     },
     onWarning: (event) => {
       setLastViolationType(event.type);

@@ -52,11 +52,15 @@ function AppContent() {
     const checkPreviousAttempt = async () => {
       if (!user) {
         setCheckingPreviousAttempt(false);
+        setHasAlreadyTaken(false); // Reset when user logs out
+        setSelectedQuizId(null); // Reset quiz selection
         return;
       }
 
       if (isTestAccount(user?.email)) {
         setCheckingPreviousAttempt(false);
+        setHasAlreadyTaken(false); // Test accounts can always take quizzes
+        setSelectedQuizId(null);
         return;
       }
 
@@ -71,6 +75,8 @@ function AppContent() {
 
         if (error) {
           console.error('Error checking previous attempt:', error);
+          setHasAlreadyTaken(false); // On error, assume no previous attempt
+          setSelectedQuizId(null);
         } else if (data && data.length > 0) {
           console.log('Found previous attempt:', data[0]);
           setHasAlreadyTaken(true);
@@ -81,9 +87,15 @@ function AppContent() {
             console.warn('quiz_type is null, defaulting to healthcare');
             setSelectedQuizId('healthcare'); // Default to healthcare if null
           }
+        } else {
+          // No previous attempts found - new user can take quiz
+          setHasAlreadyTaken(false);
+          setSelectedQuizId(null);
         }
       } catch (error) {
         console.error('Exception checking previous attempt:', error);
+        setHasAlreadyTaken(false);
+        setSelectedQuizId(null);
       } finally {
         setCheckingPreviousAttempt(false);
       }
