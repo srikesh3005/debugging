@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../contexts/AuthContext'
 import { Logo } from './Logo'
-import { Mail, Lock, User, AlertCircle, CheckCircle } from 'lucide-react'
+import { Mail, Lock, User, AlertCircle, CheckCircle, Phone } from 'lucide-react'
 
 interface SignupPageProps {
   onSwitchToLogin: () => void
@@ -11,6 +11,7 @@ export function SignupPage({ onSwitchToLogin }: SignupPageProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [fullName, setFullName] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
@@ -19,7 +20,7 @@ export function SignupPage({ onSwitchToLogin }: SignupPageProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email || !password || !fullName) {
+    if (!email || !password || !fullName || !phoneNumber) {
       setError('Please fill in all fields')
       return
     }
@@ -32,7 +33,7 @@ export function SignupPage({ onSwitchToLogin }: SignupPageProps) {
     setLoading(true)
     setError('')
 
-    const { error } = await signUp(email, password, fullName)
+    const { error } = await signUp(email, password, fullName, phoneNumber)
     
     if (error) {
       setError(error.message)
@@ -116,6 +117,29 @@ export function SignupPage({ onSwitchToLogin }: SignupPageProps) {
                 className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
                 placeholder="Enter your email"
                 disabled={loading}
+              />
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
+              Phone Number
+            </label>
+            <div className="relative">
+              <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                id="phoneNumber"
+                type="tel"
+                value={phoneNumber}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/[^0-9]/g, '')
+                  setPhoneNumber(value)
+                }}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
+                placeholder="Enter your phone number"
+                disabled={loading}
+                pattern="[0-9]*"
+                inputMode="numeric"
               />
             </div>
           </div>

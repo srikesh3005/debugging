@@ -50,39 +50,36 @@ export function useAntiCheat({
         timestamp: new Date(event.timestamp).toISOString(),
       });
     } catch (error) {
-      console.error('Failed to log anti-cheat event:', error);
+      
     }
   };
 
   // Add warning
   const addWarning = (event: AntiCheatEvent) => {
-    // Debounce: Prevent duplicate warnings within 2 seconds
     const now = Date.now();
     const lastTime = lastWarningTime.current[event.type] || 0;
     
     if (now - lastTime < 2000) {
-      console.log('Warning debounced:', event.type);
       return;
     }
     
     lastWarningTime.current[event.type] = now;
-    logEvent(event);
     
-    setWarnings((prevWarnings) => {
-      const newWarningCount = prevWarnings + 1;
-      console.log('Warning triggered:', event.type, 'Total warnings:', newWarningCount, 'Max:', maxWarnings);
+    const newWarningCount = warningsRef.current + 1;
 
-      if (onWarning) {
-        onWarning(event);
-      }
+    logEvent(event);
 
-      if (newWarningCount >= maxWarnings && onMaxWarningsReached) {
-        console.log('Max warnings reached! Auto-submitting quiz.');
+    if (onWarning) {
+      onWarning(event);
+    }
+    
+    setWarnings(newWarningCount);
+
+    if (newWarningCount >= maxWarnings && onMaxWarningsReached) {
+      setTimeout(() => {
         onMaxWarningsReached();
-      }
-
-      return newWarningCount;
-    });
+      }, 100);
+    }
   };
 
   // Request fullscreen
@@ -100,12 +97,11 @@ export function useAntiCheat({
       }
       setIsFullscreen(true);
     } catch (error) {
-      console.error('Failed to enter fullscreen:', error);
+      
     }
   };
 
   useEffect(() => {
-    // Tab visibility change detection
     const handleVisibilityChange = () => {
       if (document.hidden) {
         setHasLeftTab(true);
@@ -117,7 +113,6 @@ export function useAntiCheat({
       }
     };
 
-    // Fullscreen change detection
     const handleFullscreenChange = () => {
       const isCurrentlyFullscreen = !!(
         document.fullscreenElement ||
@@ -128,7 +123,6 @@ export function useAntiCheat({
 
       setIsFullscreen(isCurrentlyFullscreen);
 
-      // Only track fullscreen exit if user has entered fullscreen at least once
       if (isCurrentlyFullscreen) {
         hasEnteredFullscreenOnce.current = true;
       }
@@ -142,19 +136,15 @@ export function useAntiCheat({
       }
     };
 
-    // Add event listeners
     document.addEventListener('visibilitychange', handleVisibilityChange);
     document.addEventListener('fullscreenchange', handleFullscreenChange);
     document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
     document.addEventListener('mozfullscreenchange', handleFullscreenChange);
     document.addEventListener('MSFullscreenChange', handleFullscreenChange);
 
-    // Request fullscreen on mount if required
-    if (requireFullscreen) {
-      requestFullscreen();
-    }
+    // Don't automatically request fullscreen - it must be triggered by user action
+    // Users can manually enter fullscreen if needed
 
-    // Cleanup
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       document.removeEventListener('fullscreenchange', handleFullscreenChange);
@@ -162,7 +152,6 @@ export function useAntiCheat({
       document.removeEventListener('mozfullscreenchange', handleFullscreenChange);
       document.removeEventListener('MSFullscreenChange', handleFullscreenChange);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, attemptId, requireFullscreen]);
 
   return {

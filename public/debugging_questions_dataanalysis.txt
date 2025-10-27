@@ -1,0 +1,248 @@
+1.
+df['Total'] = df['Price'] + df['Quantity'] gives NaN values.
+A) missing values B) data type mismatch C) Not a Number) none of the above.
+Answer:C)
+
+2
+df.mean() throws error “could not convert string to float”.
+A) numeric field contains a string value
+B) string field contains a numeric value
+C) numeric field contains NaN value
+C) none of the above.
+Answer:A)
+
+3
+Correct way to drop a column is 
+A) df.drop('Age')
+B) df.drop('Age', axis=1, inplace=True).
+C) df.drop('Age',axis=0,inpalce=False
+D)none of the above.
+Answer:B)
+
+4
+Correct way to filter value is
+A) df[df['age'] > 30 and df['salary'] > 50000]
+B) df[df('age') > 30 and df('salary') > 50000]
+C) (df[df['age'] > 30) & (df['salary'] > 50000])
+D) df(df['age'] > 30 & df['salary'] > 50000)
+Answer:C)
+
+5
+what will the output of 
+np.mean([1, 2, 3, np.nan])
+A) syntax error
+B) 2
+C) 3
+D) nan
+Answer:D)
+
+
+6
+Find the error in the following
+df.groupby('Department').mean('Salary')
+A) mean('salary') must be in small letter
+B) mean() doesn’t take column names
+C) mean('SALARY') must be in caps 
+D) none of the above
+Answer:B)
+
+7
+df.describe(include='all', exclude='object')
+A) it must be exclude first and then include
+B) cannot use both include and exclude simultaneously.
+C) cannot use all and object
+D) none of the above
+Answer:B)
+
+8
+if df.fillna(df.mean()) didn’t update missing values the reason is
+A) there are no missing values
+B) must assign back or use inplace=True.
+C) must assign back
+D) must use inplace = True
+Answer:B)
+
+9
+Plotting:
+plt.plot(df['date'], df['sales'])
+plt.show
+A) date and sales cannot be plotted
+B) it must be only sales
+C) it must be only date
+D) missing parentheses after plt.show().
+Answer:D)
+
+10
+Trying to sort by multiple columns:
+df.sort_values('City', 'Revenue')
+A) It must be (['City', 'Revenue'])
+B) It must be (('City', 'Revenue'))
+C) It must be (['Revenue', 'City'])
+D) It must be (['City','Revenue')]
+Answer:A)
+
+11. A Pandas DataFrame operation throws KeyError: 'column_name'. What’s the most likely reason?
+
+A. Typo or missing column name in DataFrame
+B. Incorrect data type
+C. Python version issue
+D. CSV file too large
+Answer: A)
+
+12. The output of df['col'].mean() is NaN. Why?
+
+A. The column contains non-numeric data or all NaN values
+B. Function used incorrectly
+C. Wrong import statement
+D. CSV delimiter issue
+Answer: A)
+
+13. When reading a CSV file, the entire dataset loads into a single column. Debug?
+
+A. Wrong delimiter used in pd.read_csv()
+B. CSV file too small
+C. Wrong Python version
+D. Dataset corrupted
+Answer: A)
+
+14. A NumPy operation arr / 0 throws a runtime warning. How to fix?
+
+A. Replace zeros before division or handle with np.errstate()
+B. Change dtype to string
+C. Increase array size
+D. Update IDE
+Answer: A)
+
+15. Matplotlib chart shows no figure window. Cause?
+
+A. Missing plt.show()
+B. Wrong dataset
+C. Font error
+D. Jupyter cell too small
+Answer: A)
+
+16. The code df.isna().any(axis=1) gives unexpected results. Debug?
+
+A. Misunderstanding axis parameter; use axis=0 for columns
+B. Missing import
+C. DataFrame not loaded
+D. CSV file empty
+Answer: A)
+
+17. SQL query returns fewer rows than expected. Cause?
+
+A. Wrong WHERE condition filtering valid data
+B. Too many columns
+C. Database permission issue
+D. Table locked
+Answer: A)
+
+18. A correlation heatmap shows all values as NaN. Why?
+
+A. Data contains non-numeric or constant columns
+B. Plot size too small
+C. Wrong color map
+D. CSV not saved
+Answer: A)
+
+19. groupby() operation in Pandas gives DataError: No numeric types to aggregate. Cause?
+
+A. All grouped columns are strings or objects
+B. Missing import
+C. Too many rows
+D. Wrong version of Pandas
+Answer: A)
+
+20. ValueError: Length mismatch while assigning a list to a DataFrame column. Debug?
+
+A. The list length doesn’t match DataFrame rows
+B. Column name duplicated
+C. CSV corrupted
+D. dtype mismatch
+Answer: A)
+
+21. TypeError: unsupported operand type(s) during column arithmetic. Cause?
+
+A. Mixing strings with numeric columns
+B. Wrong library import
+C. Column names too long
+D. CSV not loaded
+Answer: A)
+
+22. A histogram shows only one bar. Why?
+
+A. All data values are identical
+B. Plot title missing
+C. Color scale wrong
+D. Axis labels too small
+Answer: A)
+
+23. Jupyter Notebook shows “Kernel died” when running analysis. Debug?
+
+A. Dataset too large for available memory
+B. Missing plt.show()
+C. Typo in variable name
+D. Incorrect Python path
+Answer: A)
+
+24. SettingWithCopyWarning appears in Pandas. What does it mean?
+
+A. Modifying a view instead of a copy of DataFrame
+B. Index out of range
+C. File path not found
+D. Library version mismatch
+Answer: A)
+
+25. After merging two DataFrames, unexpected duplication occurs. Why?
+
+A. Merge keys contain duplicate values
+B. CSV delimiter mismatch
+C. Different data types
+D. Plot issue
+Answer: A)
+
+26. SQL query throws ORA-00904: invalid identifier. Debug?
+
+A. Wrong column name or missing quotes
+B. Data type too long
+C. Network timeout
+D. Database full
+Answer: A)
+
+27. While plotting, plt.plot(x, y) shows a flat line. Cause?
+
+A. y-values all the same or x/y swapped
+B. Too many colors used
+C. Axis labels missing
+D. CSV header wrong
+Answer: A)
+
+28. Data cleaning function drops too many rows. Why?
+
+A. Condition in dropna() or filter too strict
+B. Plot not saved
+C. Missing parentheses
+D. CSV delimiter wrong
+Answer: A)
+
+29. Pivot table displays NaN for most cells. Cause?
+
+A. Missing values or unmatched keys in group columns
+B. Wrong color map
+C. Chart too small
+D. Wrong syntax
+Answer: A)
+
+30. The saved Excel output has no formatting and extra index column. Debug?
+
+A. Use index=False and engine='openpyxl' in to_excel()
+B. CSV file corrupted
+C. Missing pandas import
+D. Wrong data type
+Answer: A)
+
+
+
+
+
+

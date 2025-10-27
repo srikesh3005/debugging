@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { quizQuestions } from '../data/quizData';
+import { quizCategories, Question } from '../data/quizData';
 import { QuizCard } from './QuizCard';
 import { ProgressBar } from './ProgressBar';
 import { Timer } from './Timer';
@@ -10,8 +10,14 @@ import { ChevronRight, Trophy, LogOut } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
 import { useAntiCheat } from '../hooks/useAntiCheat';
+import { isTestAccount } from '../lib/testAccounts';
 
-export function QuizGame() {
+interface QuizGameProps {
+  quizId: string;
+  hasAlreadyTaken: boolean;
+}
+
+export function QuizGame({ quizId, hasAlreadyTaken: initialHasAlreadyTaken }: QuizGameProps) {
   const { user, signOut } = useAuth();
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, 'A' | 'B' | 'C' | 'D'>>({});
@@ -19,12 +25,15 @@ export function QuizGame() {
   const [isCompleted, setIsCompleted] = useState(false);
   const [overallTimerActive, setOverallTimerActive] = useState(true);
   const [startTime] = useState(Date.now());
-  const [hasAlreadyTaken, setHasAlreadyTaken] = useState(false);
-  const [checkingPreviousAttempt, setCheckingPreviousAttempt] = useState(true);
+  const [hasAlreadyTaken] = useState(initialHasAlreadyTaken);
   const [attemptId, setAttemptId] = useState<string | null>(null);
   const [showWarning, setShowWarning] = useState(false);
   const [lastViolationType, setLastViolationType] = useState<string>('');
   const [isSaving, setIsSaving] = useState(false);
+
+  const selectedQuiz = quizCategories.find(q => q.id === quizId);
+  const quizQuestions: Question[] = selectedQuiz?.questions || [];
+  const isTest = isTestAccount(user?.email);
 
   // Initialize anti-cheat system
   const {
@@ -37,7 +46,7 @@ export function QuizGame() {
     attemptId: attemptId || undefined,
     maxWarnings: 4,
     onMaxWarningsReached: async () => {
-      // Auto-submit quiz when max warnings reached
+      setShowWarning(false);
       await saveQuizResults();
       setIsCompleted(true);
     },
@@ -51,39 +60,18 @@ export function QuizGame() {
   const isAnswered = answers[currentQuestion?.id];
   const currentAnsweredCount = Object.keys(answers).length;
 
-  // Check if user has already taken the quiz
-  useEffect(() => {
-    const checkPreviousAttempt = async () => {
-      if (!user) return;
-
-      try {
-        const { data, error } = await supabase
-          .from('quiz_attempts')
-          .select('id')
-          .eq('user_id', user.id)
-          .limit(1);
-
-        if (error) {
-          console.error('Error checking previous attempts:', error);
-        } else if (data && data.length > 0) {
-          setHasAlreadyTaken(true);
-        }
-      } catch (error) {
-        console.error('Error checking previous attempts:', error);
-      } finally {
-        setCheckingPreviousAttempt(false);
-      }
-    };
-
-    checkPreviousAttempt();
-  }, [user]);
-
-  // Create quiz attempt at the start
   useEffect(() => {
     const createAttempt = async () => {
-      if (!user || hasAlreadyTaken || checkingPreviousAttempt || attemptId) return;
+      if (!user || hasAlreadyTaken || attemptId) return;
 
       try {
+        console.log('Creating quiz attempt with:', {
+          user_id: user.id,
+          quiz_type: quizId,
+          is_test: isTest,
+          total_questions: quizQuestions.length
+        });
+
         const { data, error } = await supabase
           .from('quiz_attempts')
           .insert({
@@ -91,24 +79,31 @@ export function QuizGame() {
             score: 0,
             total_questions: quizQuestions.length,
             percentage: 0,
-            time_taken: 0
+            time_taken: 0,
+            quiz_type: quizId,
+            is_test: isTest
           })
           .select()
           .single();
 
-        if (error) throw error;
+        if (error) {
+          console.error('Error creating quiz attempt:', error);
+          console.error('Error details:', JSON.stringify(error, null, 2));
+          throw error;
+        }
+
+        console.log('Quiz attempt created successfully:', data);
 
         if (data?.id) {
           setAttemptId(data.id);
-          console.log('Created attempt:', data.id);
         }
       } catch (error) {
-        console.error('Error creating quiz attempt:', error);
+        console.error('Failed to create quiz attempt:', error);
       }
     };
 
     createAttempt();
-  }, [user, hasAlreadyTaken, checkingPreviousAttempt, attemptId]);
+  }, [user, hasAlreadyTaken, attemptId, quizQuestions.length, quizId, isTest]);
 
   const handleAnswer = (questionId: number, answer: 'A' | 'B' | 'C' | 'D') => {
     setAnswers((prev) => ({ ...prev, [questionId]: answer }));
@@ -185,7 +180,7 @@ export function QuizGame() {
 
       await Promise.all(answerPromises.filter(Boolean));
     } catch (error) {
-      console.error('Error saving quiz results:', error);
+      
     } finally {
       setIsSaving(false);
     }
@@ -193,12 +188,6 @@ export function QuizGame() {
 
 
 
-  // Show loading while checking for previous attempts
-  if (checkingPreviousAttempt) {
-    return null; // Fast loading, no animation
-  }
-
-  // Show message if user has already taken the quiz
   if (hasAlreadyTaken) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
@@ -235,12 +224,13 @@ export function QuizGame() {
           </div>
           <h1 className="text-5xl font-bold text-gray-800 mb-4">Quiz Complete!</h1>
           <div className="bg-green-50 border border-green-200 text-gray-800 rounded-2xl p-8 mb-8">
-            <p className="text-2xl mb-2">Thank you for completing the debugging quiz!</p>
+            <p className="text-2xl mb-2">Thank you for completing the {selectedQuiz?.title} quiz!</p>
             <p className="text-lg opacity-90">Your results have been submitted successfully.</p>
           </div>
           <div className="text-gray-600 mb-8">
             <p className="text-lg">Quiz completed successfully!</p>
-            <p className="text-sm mt-2">You can only take this quiz once.</p>
+            {!isTest && <p className="text-sm mt-2">You can only take this quiz once.</p>}
+            {isTest && <p className="text-sm mt-2 text-green-600 font-semibold">🧪 Test Mode: You can take unlimited quizzes!</p>}
           </div>
           <button
             onClick={signOut}
@@ -256,16 +246,23 @@ export function QuizGame() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
-      {/* Logo in top left */}
       <div className="fixed top-4 left-4 z-40">
         <Logo className="w-24 h-12" />
       </div>
 
-      <OverallTimer
-        duration={30 * 60} // 30 minutes in seconds
-        onTimeUp={handleOverallTimeUp}
-        isActive={overallTimerActive && !isCompleted}
-      />
+      {isTest && (
+        <div className="fixed top-4 right-4 z-40 bg-green-500 text-white px-4 py-2 rounded-lg font-semibold shadow-lg animate-pulse">
+          🧪 TEST MODE - Unlimited Attempts
+        </div>
+      )}
+
+      {!isTest && (
+        <OverallTimer
+          duration={30 * 60}
+          onTimeUp={handleOverallTimeUp}
+          isActive={overallTimerActive && !isCompleted}
+        />
+      )}
       
       {/* Anti-cheat warning modal */}
       {showWarning && (

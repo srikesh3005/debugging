@@ -1,0 +1,239 @@
+1. A Python script for calculating average heart rate crashes with ZeroDivisionError. Why?
+
+A. Heart rate values are too high
+B. The list of readings is empty
+C. Using a string instead of int
+D. Python version mismatch
+Answer: B
+
+2. An API returns 401 Unauthorized when fetching patient records. What is the likely cause?
+
+A. Token missing or expired
+B. Database is offline
+C. Invalid HTML on frontend
+D. Bluetooth disconnected
+Answer: A
+
+3. Login validation fails in a hospital portal even with correct credentials. Cause?
+
+A. Wrong font in input box
+B. Password hash comparison mismatch
+C. Browser zoom level
+D. CSS issue
+Answer: B.
+
+4. A chart for displaying patient vitals in JavaScript is not rendering. Why?
+
+A. Chart container is hidden
+B. JSON data keys mismatch expected format
+C. User has no internet
+D. Temperature readings too low
+ Answer: B
+
+5. BMI calculation in an app gives wrong results. Cause?
+
+A. Incorrect units (e.g., height in cm instead of meters)
+B. Using color codes instead of numbers
+C. API request timeout
+D. Browser cache
+Answer: A
+
+6. Appointment scheduler shows wrong timezones. Debug?
+
+A. Frontend CSS is broken
+B. Backend storing UTC but frontend not converting
+C. Database is read-only
+D. JavaScript minification
+Answer: B
+
+7. API returns 500 Internal Server Error while fetching patient records. Cause?
+
+A. Database field is NULL or missing
+B. Internet slow
+C. Browser version too old
+D. Font mismatch
+Answer: A
+
+8. Glucose monitor IoT readings stop updating. Cause?
+
+A. MQTT connection lost or not subscribed
+B. Sensor battery full
+C. Screen brightness low
+D. Database offline
+ Answer: A
+
+9. React app throws “component not found.” Likely reason?
+
+A. Import path incorrect or file name mismatch
+B. Server port blocked
+C. JavaScript disabled
+D. CSS missing
+ Answer: A
+
+10. Chatbot repeats responses constantly. Debug?
+
+A. Session ID resets on each message
+B. HTML validation error
+C. Internet speed slow
+D. Font size too small
+Answer: A
+
+11. REST API returns CORS error. Fix?
+
+A. Enable Access-Control-Allow-Origin on server
+B. Clear browser cache
+C. Restart server
+D. Update CSS
+Answer: A
+
+12. Billing app calculates wrong totals. Why?
+
+A. Floating-point precision issues
+B. Font size too small
+C. API endpoint blocked
+D. Browser theme dark
+Answer: A
+
+13. Mobile app fails to sync patient reports. Likely cause?
+
+A. Missing internet permission in app manifest
+B. CSS missing
+C. Icon size incorrect
+D. User login not required
+Answer:
+
+14. Temperature sensor shows negative readings. Debug?
+
+A. Sensor calibration or ADC formula incorrect
+B. Internet slow
+C. Browser zoom high
+D. CSS style overrides
+Answer: A
+
+15. ML model predicts only one class (0% accuracy). Cause?
+
+A. Imbalanced training data or label encoding error
+B. Python version mismatch
+C. Database empty
+D. Internet disconnected
+Answer: A
+
+16. Analytics dashboard shows stale patient data. Debug?
+
+A. Cache not invalidated or refresh logic missing
+B. Incorrect CSS
+C. Chart font size too large
+D. Screen resolution too low
+Answer: A
+
+17. SQL query returns duplicate patient records. Fix?
+
+A. Use DISTINCT or correct join conditions
+B. Increase font size
+C. Clear browser cache
+D. Use HTTPS
+Answer: A
+
+18. Search returns “undefined” for patient names. Cause?
+
+A. Null or empty string in JSON response
+B. CSS not loaded
+C. Font too small
+D. Icon missing
+Answer: A
+
+19. Telehealth video session fails to connect. Why?
+
+A. Incorrect WebRTC TURN/STUN server credentials
+B. Browser theme dark
+C. Font mismatch
+D. CSS file missing
+Answer: A
+
+20. Image processing script throws “File not found.” Cause?
+
+A. Wrong file path or relative/absolute path mismatch
+B. CSS missing
+C. Font size too large
+D. JavaScript minified
+Answer: A
+
+21. REST API returns wrong JSON format. Debug?
+
+A. Serialization error (JSON.stringify() or model-to-dict)
+B. Font missing
+C. CSS file not loaded
+D. Icon size mismatch
+Answer: A
+
+22. Notification service sends duplicates. Cause?
+
+A. Message queue not acknowledged properly
+B. CSS issue
+C. Font mismatch
+D. Browser zoom
+Answer: A
+
+23. Wearable health app crashes on startup. Likely reason?
+
+A. Bluetooth initialization or permission missing
+B. Icon missing
+C. Browser offline
+D. CSS missing
+Answer: A
+
+24. Flask dashboard doesn’t update after data entry. Debug?
+
+A. Route returns cached template, not fresh database data
+B. Font size mismatch
+C. CSS missing
+D. JavaScript minified
+Answer: A
+
+25. API allows overlapping appointments. Fix?
+
+A. Validate time conflicts before inserting into database
+B. CSS missing
+C. Font too small
+D. JS minification
+Answer: A
+
+26. Django app throws CSRF errors. Debug?
+
+A. Ensure CSRF token included in AJAX request
+B. CSS missing
+C. Font mismatch
+D. Database empty
+Answer: A
+
+27. Backend job for ECG file processing runs infinitely. Cause?
+
+A. Missing termination condition in loop
+B. Font size mismatch
+C. CSS file missing
+D. Browser zoom high
+Answer: A
+
+28. API rate limiter blocks legitimate staff. Fix?
+
+A. Adjust thresholds or whitelist internal IPs
+B. Font size mismatch
+C. CSS missing
+D. JavaScript minified
+Answer: A
+
+29. Angular patient portal doesn’t load after deployment. Why?
+
+A. Base href or routing config incorrect in production
+B. Font mismatch
+C. CSS missing
+D. Icon missing
+Answer: A
+
+30. AI recommendation system gives inconsistent results. Debug?
+
+A. Backend model version mismatch with test/training version
+B. Font mismatch
+C. CSS missing
+D. Browser offline
+Answer: A.

@@ -1,0 +1,171 @@
+1
+What is a social application?
+
+A. An app for society at large
+B. An app that helps users connect and share content
+C. An app for social movement of users
+D. An app for to solve social issues
+Answer: B
+
+2
+Which language is commonly used to build social media backends?
+
+A. HTML
+B. CSS
+C. Python
+D. XML
+Answer: C
+
+3
+ What does a database do in a social app?
+
+A. Sends emails
+B. Stores user data and posts
+C. Designs UI
+D. Manages sound effects
+Answer:B
+
+4
+What is an API used for?
+
+A. To connect frontend and backend of an app
+B. To draw graphics
+C. To play videos
+D. To edit images
+Answer: A
+
+5
+What is the main use of user authentication?
+
+A. To decorate the website
+B. To add new colors
+C. To increase website traffic
+D. To verify the identity of users
+Answer: D
+
+6
+What is a “news feed” in a social application?
+
+A. A list of online friends
+B. A system for sending notifications
+C. A stream of updates and posts from users
+D. A video player
+Answer: C
+
+17
+Which technology helps enable real-time chat?
+
+A. WebSockets
+B. HTML
+C. JSON
+D. XML
+Answer: A
+
+18
+Why is image compression important in apps?
+
+A. To reduce storage and loading time
+B. To increase brightness
+C. To make images colorful
+D. To remove backgrounds
+Answer: A
+
+19
+What does content moderation mean?
+
+A. Adding more advertisements
+B. Filtering harmful or abusive content
+C. Improving graphics quality
+D. Increasing likes on posts
+Answer: B
+
+20
+How can social applications handle many users efficiently?
+
+A. By deleting old data
+B. By reducing app size
+C. By using caching and load balancing
+D. By disabling login
+Answer: C
+
+21. A chat feature in a social app shows messages in the wrong order. What is the likely cause?
+
+A. Missing sort by timestamp in database query
+B. Font mismatch
+C. Browser cache full
+D. JavaScript minified
+Answer: A. 
+
+22. The “like” count doesn’t update until the page is refreshed. What could fix this?
+
+A. Increase CSS z-index
+B. Compress images
+C. Add more JavaScript libraries
+D. Use AJAX or WebSocket to update the count dynamically
+Answer: D
+
+23. User profile pictures fail to load on the feed. What’s the most probable cause?
+
+A. Database query limit exceeded
+B. Wrong file path or missing image URL in backend response
+C. Font color conflict
+D. CSS padding too small
+Answer: B
+
+24. A social app’s login API keeps returning 400 Bad Request. Why?
+
+
+A. HTML tag mismatch
+B. CSS not linked
+C. Incorrect JSON body or missing parameters in POST request
+D. Font not loaded
+Answer: C
+
+25.Notifications are delayed by several minutes. What’s the likely issue?
+
+A. Message queue (e.g., RabbitMQ or Firebase) processing lag
+B. Wrong font family
+C. Outdated CSS file
+D. Browser zoom too high
+Answer: A.
+
+26.User posts disappear after refreshing the page. Why?
+
+A. CSS overflow hidden
+B. Posts not persisted in database — stored only in frontend state
+C. Wrong font color
+D. API key expired
+Answer: B.
+
+27.When uploading an image, the app shows “Unsupported file type.” Debug?
+
+A. CSS media query missing
+B. Internet too slow
+C. MIME type filter doesn’t include uploaded file extension
+D. Browser cache full
+Answer: C
+
+28.The search bar in the social app returns no results. Debug?
+
+A. Browser not supported
+B. CSS font too small
+C. API timeout
+D. Backend query not filtering or using wrong field name
+Answer: C
+
+29.Users report their passwords never reset via email. Debug?
+
+A. Email server misconfigured or SMTP authentication failed
+B. Image upload limit reached
+C. Wrong redirect in CSS
+D. Database timeout
+Answer: A
+
+30.A social media app shows duplicate friend requests. Debug?
+
+A. JavaScript import missing
+B. Backend logic doesn’t check if a request already exists
+C. Font mismatch
+D. Session expired
+Answer: B
+

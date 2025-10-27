@@ -47,7 +47,7 @@ export function AdminDashboard() {
       
       setWarningsData(warningCounts);
     } catch (err: any) {
-      console.error('Error fetching warnings:', err);
+      
     }
   };
 

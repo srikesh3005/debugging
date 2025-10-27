@@ -1,0 +1,240 @@
+1. A smart home lighting app doesn’t respond to user commands. What’s the most likely cause?
+
+A. MQTT broker not connected
+B. CSS not loaded
+C. Wrong color setting
+D. Low screen brightness
+Answer: A
+
+2. Sensor readings in an IoT dashboard update randomly. Why?
+
+
+A. Wrong CSS grid layout
+B. Data sampling rate not synchronized with sensor frequency
+C. Database query timeout
+D. Browser zoom too high
+Answer: C
+
+3. A cloud-based smart irrigation system stops after one cycle. Debug?
+
+A.Font color mismatch
+B. CSS padding issue
+C. Infinite loop condition missing or scheduling logic incorrect
+D. Sensor battery low
+Answer: C. 
+
+4. A mobile smart app cannot connect to a device via Bluetooth. Why?
+
+A. Font size mismatch
+B. CSS file missing
+C. Wrong icon path
+D. Missing Bluetooth permission or adapter initialization
+Answer: D.
+
+5. IoT data isn’t reaching the cloud server. What’s the first thing to check?
+
+A. Device internet connectivity and API endpoint URL
+B. Font color in dashboard
+C. CSS overflow
+D. Battery voltage
+Answer: A
+
+6. The dashboard shows “NaN” for temperature values. Cause?
+
+A. Wrong font
+B. Sensor sending string instead of numeric data
+C. API key expired
+D. CSS flex issue
+Answer: B.
+
+7. Smart parking sensors send duplicate occupancy updates. Debug?
+
+A. Database locked
+B. CSS hover bug
+C. Debouncing or message queue acknowledgment missing
+D. API limit exceeded
+Answer: C. 
+
+8. An AI-based recommendation system gives identical outputs for all users. Why?
+
+A. Database connection slow
+B. Wrong CSS color map
+C. Training set too large
+D. Model not updated with dynamic user data
+Answer: D.
+
+9. A face-recognition smart attendance app fails for new users. Debug?
+
+A. Model not retrained with latest face embeddings
+B. CSS opacity too low
+C. Database query syntax error
+D. Wrong HTML tag
+Answer: A
+
+10. IoT log shows repeated connection attempts. Why?
+
+A. CSS class conflict
+B. Broker hostname or port incorrect
+C. API key missing
+D. Dashboard theme wrong
+Answer: B
+
+11. Smart energy meter values appear inconsistent. Debug?
+
+A. Sensor calibration or scaling factor incorrect
+B. Font mismatch
+C. Chart title missing
+D. Wrong color palette
+Answer: C
+
+12. A mobile smart app doesn’t send push notifications. Cause?
+
+A. JavaScript commented out
+B. CSS color missing
+C. Image resolution low
+D. FCM/APNS key misconfigured or permission disabled
+Answer: D
+
+13. The IoT device stops after firmware update. Debug?
+
+A. Flash memory overflow or missing bootloader section
+B. Font size mismatch
+C. CSS class missing
+D. Database schema changed
+Answer: A. 
+
+14. Data in cloud database appears delayed. Why?
+
+A. Latency in MQTT/HTTP data pipeline
+B. CSS animation delay
+C. Chart not refreshed
+D. Timezone mismatch
+Answer: A
+
+15. Smart camera system restarts frequently. What’s the cause?
+
+A. CSS overflow hidden
+B. Memory leak or insufficient buffer allocation
+C. Wrong color encoding
+D. Font mismatch
+Answer: B
+
+16. Sensor values update but dashboard graphs remain static. Debug?
+
+A. CSS not applied
+B. Frontend not re-rendering — missing state update or WebSocket listener
+C. Chart colors wrong
+D. HTML tag closed improperly
+Answer: B
+
+17. IoT device time doesn’t match system clock. Cause?
+
+A. Database outdated
+B. CSS margin wrong
+C. NTP synchronization disabled
+D. Chart legend hidden
+Answer: C
+
+18. Voice assistant in smart app doesn’t respond to commands. Debug?
+
+A. CSS file too large
+B. Font mismatch
+C. Microphone permission or speech recognition model inactive
+D. Wrong redirect URL
+Answer: C
+
+19. A smart vehicle tracking app shows wrong location. Why?
+
+A. Wrong CSS animation
+B. Font color too dark
+C. GPS module not initialized or incorrect coordinate conversion
+D. Image not loaded
+Answer: C. 
+
+20. Machine learning inference on edge devices is slow. Debug?
+
+A. Wrong thread priority
+B. CSS missing
+C. Database connection timeout
+D. Model not quantized or too large for device memory
+Answer: D. 
+
+21. Smart thermostat fails to update settings remotely. Why?
+
+A. Theme conflict
+B. Chart label missing
+C. Wrong CSS flex layout
+D. Missing authentication token or endpoint timeout
+Answer: D
+
+22. IoT device sends incomplete data packets. Debug?
+
+A. Buffer size too small or packet fragmentation issue
+B. CSS padding missing
+C. Wrong database table
+D. API path incorrect
+Answer: A
+
+23. Edge AI camera’s object detection misfires in low light. Cause?
+
+A. CSS font contrast low
+B. Model not trained for low illumination scenarios
+C. Image scaling wrong
+D. Hardware connection loose
+Answer: B
+
+24. Smart app dashboard fails to load widgets. Debug?
+
+A. Wrong icon set
+B. Font mismatch
+C. JavaScript import missing or build error in frontend
+D. Low screen brightness
+Answer: C.
+
+25. IoT logs show “Unauthorized access attempt.” Why?
+
+A. Data type mismatch
+B. Chart legend missing
+C. CSS property typo
+D. Device certificate expired or token invalid
+✅ Answer: D
+
+26. Smart farming app shows duplicated sensor entries. Cause?
+
+A. Backend not filtering duplicate timestamps
+B. Chart overlapping
+C. Wrong HTML nesting
+D. Image path incorrect
+Answer: A
+
+27. Data visualization app crashes with “MemoryError.” Debug?
+
+A. Missing CSS link
+B. Loading too much data into memory — use chunk processing
+C. Chart color overflow
+D. Font not imported
+Answer: B
+
+28. Cloud dashboard throws “CORS policy blocked” error. Fix?
+
+A. Add SSL certificate
+B. Rebuild CSS file
+C. Enable Access-Control-Allow-Origin header on API server
+D. Change browser zoom
+Answer: C
+
+29. IoT alert system triggers alarms even when readings are normal. Debug?
+
+A. Comparison threshold logic reversed or misconfigured
+B. Font weight wrong
+C. CSS z-index low
+D. Database locked
+Answer: A
+
+30. Cloud IoT dashboard time series graph shows wrong timestamps. Why?
+
+A. CSS alignment off with timezone
+B. Chart legend hidden with incorrect timezone
+C. Incorrect timezone handling or UTC conversion missing
+D. JavaScript wrong timezone 
+Answer C

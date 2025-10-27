@@ -12,13 +12,13 @@ export function AntiCheatWarning({ warnings, maxWarnings, lastWarningType, onDis
   
   const handleDismiss = () => {
     onDismiss();
-    // Automatically re-enter fullscreen after dismissing warning
     if (requestFullscreen) {
       setTimeout(() => {
         requestFullscreen();
       }, 100);
     }
   };
+
   const warningMessages: Record<string, string> = {
     tab_switch: 'Switching tabs or windows is not allowed during the quiz',
     fullscreen_exit: 'You must stay in fullscreen mode during the quiz',
